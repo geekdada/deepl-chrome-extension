@@ -37,14 +37,14 @@ if (fileSystem.existsSync(secretsPath)) {
 const options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
-    options: path.join(__dirname, 'src', 'pages', 'Options', 'index.tsx'),
-    popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
-    background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
-    contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
+    options: path.join(__dirname, 'src/pages/Options/index.tsx'),
+    popup: path.join(__dirname, 'src/pages/Popup/index.jsx'),
+    background: path.join(__dirname, 'src/pages/Background/index.ts'),
+    contentScript: path.join(__dirname, 'src/pages/Content/index.ts'),
   },
-  chromeExtensionBoilerplate: {
-    notHotReload: ['contentScript'],
-  },
+  // chromeExtensionBoilerplate: {
+  //   notHotReload: ['contentScript'],
+  // },
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].bundle.js',
