@@ -1,16 +1,25 @@
 import React from 'react'
 import { render } from 'react-dom'
+// @ts-ignore
+import smoothScrollPolyfill from 'smoothscroll-polyfill'
+import * as rangy from 'rangy'
+// @ts-ignore
+import 'rangy/lib/rangy-classapplier'
+import 'rangy/lib/rangy-highlighter'
 
 import logger from '../../common/logger'
 import { SupportLanguages } from '../../common/types'
 import translationStack from './common/translation-stack'
 import { TextSelection } from './common/types'
+import { getFirstRange } from './common/utils'
 import App from './components/App'
 import './styles/index.scss'
 import { TranslateJobsProvider } from './providers/translate-jobs'
 
 let isAppAttached = false
-let lastSelection: TextSelection | undefined
+let lastSelection: (TextSelection & { selection: RangySelection }) | undefined
+let highlighter: any
+
 const main = async () => {
   const container = document.createElement('div')
   container.id = 'ate-container'
@@ -28,26 +37,43 @@ const main = async () => {
 
   window.addEventListener('load', () => {
     try {
-      document.querySelector('body')?.append(iconContainer)
-      document.querySelector('body')?.append(container)
+      // @ts-ignore
+      rangy.init()
+      // @ts-ignore
+      highlighter = rangy.createHighlighter()
+      // @ts-ignore
+      highlighter.addClassApplier(
+        // @ts-ignore
+        rangy.createClassApplier('ate-highlight', {
+          ignoreWhiteSpace: true,
+          tagNames: ['span', 'a'],
+        }),
+      )
+
+      document.querySelector<HTMLBodyElement>('body')?.append(iconContainer)
+      document.querySelector<HTMLBodyElement>('body')?.append(container)
 
       attachListeners()
 
       // TODO: remove before deploying
-      initApp()
+      // initApp()
     } catch (err) {
       logger.error({
         err,
       })
     }
   })
+
+  if (!('scrollBehavior' in document.documentElement.style)) {
+    smoothScrollPolyfill.polyfill()
+  }
 }
 
 const onMouseUp = (e: MouseEvent) => {
-  const selection = window.getSelection()
+  const selection = rangy.getSelection()
   const iconElement = document.querySelector<HTMLSpanElement>('#ate-icon')
 
-  if (selection?.toString().trim() && iconElement) {
+  if (selection.toString().trim() && iconElement) {
     lastSelection = getTextSelection(selection)
     iconElement.style.top = e.pageY + 20 + 'px'
     iconElement.style.left = e.pageX + 'px'
@@ -73,24 +99,49 @@ const onClickTranslate = (selection: TextSelection) => {
 
 const attachListeners = () => {
   document.addEventListener('mouseup', onMouseUp, false)
-  document.querySelector('#ate-icon')?.addEventListener('click', (e) => {
-    logger.debug({
-      msg: 'lastSelection',
-      lastSelection,
+  document
+    .querySelector<HTMLSpanElement>('#ate-icon')
+    ?.addEventListener('click', function () {
+      logger.debug({
+        msg: 'lastSelection',
+        lastSelection,
+      })
+
+      if (lastSelection) {
+        highlightSelection(lastSelection.selection)
+
+        onClickTranslate({
+          text: lastSelection.text,
+          parentElement: lastSelection.parentElement,
+          sourceLang: lastSelection.sourceLang,
+        })
+
+        setTimeout(() => {
+          lastSelection?.selection.removeAllRanges()
+          this.classList.remove('active')
+        }, 0)
+      }
     })
-    if (lastSelection) {
-      onClickTranslate(lastSelection)
-    }
-  })
 }
 
-const getTextSelection = (selection: Selection): TextSelection => {
+const highlightSelection = (selection: RangySelection) => {
+  const range = getFirstRange(selection)
+
+  if (!range || !highlighter) {
+    return
+  }
+
+  highlighter.highlightSelection('ate-highlight')
+}
+
+const getTextSelection = (
+  selection: RangySelection,
+): TextSelection & { selection: RangySelection } => {
   const text = selection.toString().trim()
 
   return {
-    anchor: selection.anchorNode?.parentElement ?? undefined,
-    anchorOffset: selection.anchorOffset,
-    rangeCount: selection.rangeCount,
+    selection,
+    parentElement: selection.anchorNode?.parentElement ?? undefined,
     sourceLang: getSourceLang(),
     text,
   }

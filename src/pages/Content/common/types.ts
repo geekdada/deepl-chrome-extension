@@ -1,9 +1,7 @@
 import { SupportLanguages } from '../../../common/types'
 
 export interface TextSelection {
-  anchor?: Node
-  anchorOffset?: number
-  rangeCount?: number
+  parentElement?: HTMLElement
   sourceLang?: SupportLanguages
   text: string
 }

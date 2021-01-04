@@ -1,5 +1,5 @@
 .ate_TranslationItem {
-  @apply text-gray-800 space-y-3 select-auto;
+  @apply p-3 text-gray-800 space-y-3 select-text cursor-pointer;
 
   &__upper {
     @apply space-y-3;

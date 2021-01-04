@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import Client from '../../../common/api'
 import logger from '../../../common/logger'
 import { TranslateResult } from '../../../common/types'
 import client from '../common/client'
@@ -14,11 +13,24 @@ const TranslationItem: React.FC<{
   const [loading, setLoading] = useState(true)
   const [result, setResult] = useState<string>()
 
+  const findOriginal = () => {
+    const { parentElement } = job
+
+    if (!parentElement) {
+      return
+    }
+
+    window.scrollTo(0, parentElement.offsetTop - 20)
+  }
+
   useEffect(() => {
+    if (!config) return
+
     const res = client.send(
       'translate',
       {
-        ...job,
+        text: job.text,
+        id: job.id,
         targetLang: config.targetLang,
       },
       true,
@@ -46,7 +58,7 @@ const TranslationItem: React.FC<{
   }, [job, config])
 
   return (
-    <div className="ate_TranslationItem">
+    <div className="ate_TranslationItem" onClick={() => findOriginal()}>
       <div className="ate_TranslationItem__upper">
         <div>
           {job.text.length > 100 ? (

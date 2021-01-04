@@ -8,12 +8,6 @@ export type ConfigState = {
 
 export const ConfigContext = createContext<ConfigState | undefined>(undefined)
 
-export const useConfig = (): ConfigState => {
-  const context = useContext(ConfigContext)
-
-  if (context === undefined) {
-    throw new Error('useConfig must be used within a ConfigContext.Provider')
-  }
-
-  return context
+export const useConfig = (): ConfigState | undefined => {
+  return useContext(ConfigContext)
 }

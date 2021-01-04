@@ -14,16 +14,18 @@
     left: 0;
     margin: 0;
     padding: 0;
-
-    @apply select-none;
 }
 
 #ate-container {
     position: fixed;
+
+    @apply select-none;
 }
 
 #ate-icon-container {
     position: absolute;
+
+    @apply select-none;
 }
 
 #ate-icon {
@@ -44,4 +46,8 @@
 
 #ate-icon:hover {
     cursor: pointer;
+}
+
+.ate-highlight {
+    @apply bg-purple-200;
 }

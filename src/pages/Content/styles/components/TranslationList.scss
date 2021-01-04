@@ -1,7 +1,7 @@
 .ate_TranslationList {
-  @apply space-y-2 divide-y divide-gray-200 divide-solid;
+  @apply divide-y divide-gray-200 divide-solid;
 
   &__item {
-    @apply p-3 border-l-0 border-r-0;
+    @apply border-l-0 border-r-0;
   }
 }
