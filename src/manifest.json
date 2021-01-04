@@ -1,6 +1,6 @@
 {
   "name": "A Translator",
-  "permissions": ["storage"],
+  "permissions": ["<all_urls>", "storage"],
   "options_ui": {
     "page": "options.html",
     "chrome_style": false,
@@ -20,7 +20,7 @@
     {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
       "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"],
+      "css": ["contentScript.bundle.css"],
       "run_at": "document_start"
     }
   ],

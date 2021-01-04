@@ -1,0 +1,14 @@
+.ate_App {
+  position: absolute;
+  width: 450px;
+  height: 600px;
+  z-index: 9998;
+  @apply bg-white shadow rounded-lg overflow-hidden flex flex-col;
+
+  &__header {
+    @apply bg-purple-800 px-5 py-3 text-white font-bold cursor-move;
+  }
+  &__container {
+    @apply flex-1 overflow-auto;
+  }
+}

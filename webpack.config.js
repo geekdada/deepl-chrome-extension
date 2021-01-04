@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const env = require('./utils/env')
 
@@ -54,12 +55,15 @@ const options = {
     rules: [
       {
         test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.scss$/i,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
-          {
-            loader: 'postcss-loader',
-          },
+          'postcss-loader',
+          'sass-loader',
         ],
       },
       {
@@ -124,35 +128,23 @@ const options = {
         },
       ],
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/pages/Content/content.styles.css',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
+    new MiniCssExtractPlugin({
+      filename: '[name].bundle.css',
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Options', 'index.html'),
+      template: path.join(__dirname, 'src/pages/Options/index.html'),
       filename: 'options.html',
       chunks: ['options'],
       cache: false,
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
+      template: path.join(__dirname, 'src/pages/Popup/index.html'),
       filename: 'popup.html',
       chunks: ['popup'],
       cache: false,
     }),
     new HtmlWebpackPlugin({
-      template: path.join(
-        __dirname,
-        'src',
-        'pages',
-        'Background',
-        'index.html',
-      ),
+      template: path.join(__dirname, 'src/pages/Background/index.html'),
       filename: 'background.html',
       chunks: ['background'],
       cache: false,

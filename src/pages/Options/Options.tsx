@@ -9,7 +9,7 @@ import { Global } from '@emotion/react'
 import cc from 'chrome-call'
 
 import Client from '../../common/api'
-import { Config } from '../../common/chrome'
+import { Config } from '../../common/types'
 
 import OptionSection from './components/OptionSection'
 

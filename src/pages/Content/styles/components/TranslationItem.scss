@@ -1,0 +1,16 @@
+.ate_TranslationItem {
+  @apply text-gray-800 space-y-3 select-auto;
+
+  &__upper {
+    @apply space-y-3;
+  }
+  &__lower {
+    @apply flex;
+  }
+  &__result {
+    @apply rounded bg-yellow-50 p-3;
+  }
+  &__source-lang-tag {
+    @apply px-2 py-1 bg-green-50 text-green-600 text-sm rounded;
+  }
+}

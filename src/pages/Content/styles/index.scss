@@ -1,0 +1,47 @@
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import './components/App';
+@import './components/TranslationList';
+@import './components/TranslationItem';
+
+
+#ate-icon-container,
+#ate-container {
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+
+    @apply select-none;
+}
+
+#ate-container {
+    position: fixed;
+}
+
+#ate-icon-container {
+    position: absolute;
+}
+
+#ate-icon {
+    display: none;
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+}
+
+#ate-icon.active {
+    display: block;
+}
+
+#ate-icon:hover {
+    cursor: pointer;
+}

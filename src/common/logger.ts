@@ -2,6 +2,7 @@ import pino from 'pino'
 import omit from 'lodash-es/omit'
 
 const logger = pino({
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   browser: {
     write(o) {
       // eslint-disable-next-line prefer-const
