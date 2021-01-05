@@ -121,15 +121,26 @@ const Options: React.FC = () => {
           </div>
 
           <div tw="p-5 space-x-4 justify-self-end">
+            <a
+              href="https://www.notion.so/geekdada/41aad58f38f0492197f9845e26b248d0"
+              target="_blank"
+              rel="noreferrer">
+              <button
+                type="button"
+                tw="px-4 py-2 border border-solid border-indigo-800 text-indigo-800 rounded-md leading-normal">
+                反馈问题
+              </button>
+            </a>
+
             <button
               onClick={onTestToken}
-              tw="px-4 py-2 border border-solid border-indigo-800 text-indigo-800 rounded-md">
+              tw="px-4 py-2 border border-solid border-indigo-800 text-indigo-800 rounded-md leading-normal">
               测试 Token
             </button>
 
             <button
               type="submit"
-              tw="px-4 py-2 bg-indigo-800 text-white rounded-md">
+              tw="px-4 py-2 bg-indigo-800 text-white rounded-md leading-normal">
               保存
             </button>
           </div>
