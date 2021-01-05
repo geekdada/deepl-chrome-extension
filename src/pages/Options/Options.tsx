@@ -52,10 +52,10 @@ const Options: React.FC = () => {
   }
 
   useEffect(() => {
-    cc(chrome.storage.sync, 'get').then((config: Config) => {
-      setTargetLang(config.targetLang)
-      setToken(config.token)
-      setRegion(config.region)
+    cc(chrome.storage.sync, 'get').then((config: Partial<Config>) => {
+      if (config.targetLang !== undefined) setTargetLang(config.targetLang)
+      if (config.token !== undefined) setToken(config.token)
+      if (config.region !== undefined) setRegion(config.region)
     })
   }, [])
 
