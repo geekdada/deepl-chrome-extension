@@ -39,12 +39,9 @@ const options = {
   mode: env.NODE_ENV || 'development',
   entry: {
     options: path.join(__dirname, 'src/pages/Options/index.tsx'),
-    popup: path.join(__dirname, 'src/pages/Popup/index.jsx'),
+    // popup: path.join(__dirname, 'src/pages/Popup/index.jsx'),
     background: path.join(__dirname, 'src/pages/Background/index.ts'),
     contentScript: path.join(__dirname, 'src/pages/Content/index.tsx'),
-  },
-  chromeExtensionBoilerplate: {
-    notHotReload: ['contentScript'],
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -140,12 +137,12 @@ const options = {
       chunks: ['options'],
       cache: false,
     }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src/pages/Popup/index.html'),
-      filename: 'popup.html',
-      chunks: ['popup'],
-      cache: false,
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: path.join(__dirname, 'src/pages/Popup/index.html'),
+    //   filename: 'popup.html',
+    //   chunks: ['popup'],
+    //   cache: false,
+    // }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/pages/Background/index.html'),
       filename: 'background.html',
@@ -161,6 +158,7 @@ const options = {
 if (env.NODE_ENV === 'development') {
   options.devtool = 'eval-source-map'
 } else {
+  options.devtool = 'source-map'
   options.optimization = {
     minimize: true,
     minimizer: [

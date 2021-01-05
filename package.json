@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node utils/webserver.js",
-    "build": "node utils/build.js",
+    "build": "NODE_ENV=production webpack",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,html}'"
   },
   "dependencies": {
