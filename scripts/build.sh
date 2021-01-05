@@ -4,5 +4,5 @@ set -e
 
 mkdir -p ./release
 
-zip -r "extension.${npm_package_version}.zip" "./build"
+zip -r "extension.zip" "./build"
 mv extension.* ./release
