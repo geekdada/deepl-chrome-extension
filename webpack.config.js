@@ -109,6 +109,9 @@ const options = {
     }),
     // expose and write the allowed env vars on the compiled bundle
     new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {

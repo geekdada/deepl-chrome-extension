@@ -8,6 +8,10 @@ const TranslationList: React.FC = () => {
 
   return (
     <div className="ate_TranslationList">
+      {!jobsState.jobs.length ? (
+        <div className="ate_TranslationList__empty">还没有翻译…</div>
+      ) : undefined}
+
       {jobsState.jobs.map((job) => (
         <div key={job.id} className="ate_TranslationList__item">
           <TranslationItem job={job} />

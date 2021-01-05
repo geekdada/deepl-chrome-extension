@@ -19,7 +19,7 @@ const reducer: TranslateJobsReducer = (state, action) => {
   switch (action.type) {
     case 'add':
       return {
-        jobs: [action.payload, ...state.jobs],
+        jobs: [...state.jobs, action.payload],
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)

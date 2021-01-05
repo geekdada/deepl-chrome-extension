@@ -1,0 +1,5 @@
+.ate_Icon {}
+
+.ate_IconButton {
+  @apply inline-flex justify-center items-center w-auto h-auto m-0 p-2 cursor-pointer text-center no-underline rounded-md border border-solid border-gray-800 bg-white hover:bg-gray-100 active:bg-gray-200 transition-colors ease-in-out duration-150;
+}

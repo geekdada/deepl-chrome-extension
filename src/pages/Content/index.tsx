@@ -9,6 +9,7 @@ import 'rangy/lib/rangy-highlighter'
 
 import logger from '../../common/logger'
 import { SupportLanguages } from '../../common/types'
+import server from './common/server'
 import translationStack from './common/translation-stack'
 import { TextSelection } from './common/types'
 import { getFirstRange } from './common/utils'
@@ -89,16 +90,13 @@ const onMouseUp = (e: MouseEvent) => {
 }
 
 const onClickTranslate = (selection: TextSelection) => {
-  if (isAppAttached) {
-    translationStack.push(selection)
-  } else {
-    initApp()
-    translationStack.push(selection)
-  }
+  initApp()
+  translationStack.push(selection)
 }
 
 const attachListeners = () => {
   document.addEventListener('mouseup', onMouseUp, false)
+
   document
     .querySelector<HTMLSpanElement>('#ate-icon')
     ?.addEventListener('click', function () {
@@ -122,6 +120,12 @@ const attachListeners = () => {
         }, 0)
       }
     })
+
+  server.on('connect', (client) => {
+    client.on('open_extension', () => {
+      initApp()
+    })
+  })
 }
 
 const highlightSelection = (selection: RangySelection) => {
@@ -202,13 +206,17 @@ const getSourceLang = (): SupportLanguages | undefined => {
 }
 
 const initApp = () => {
-  render(
-    <TranslateJobsProvider>
-      <App />
-    </TranslateJobsProvider>,
-    document.querySelector('#ate-container'),
-  )
-  isAppAttached = true
+  if (isAppAttached) {
+    window.__ate_setClose && window.__ate_setClose(false)
+  } else {
+    render(
+      <TranslateJobsProvider>
+        <App />
+      </TranslateJobsProvider>,
+      document.querySelector('#ate-container'),
+    )
+    isAppAttached = true
+  }
 }
 
 main().catch((err) => {

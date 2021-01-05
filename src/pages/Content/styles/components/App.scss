@@ -5,8 +5,14 @@
   z-index: 9998;
   @apply bg-white shadow rounded-lg overflow-hidden flex flex-col;
 
+  &--inactive {
+    display: none;
+  }
   &__header {
-    @apply bg-purple-800 px-5 py-3 text-white font-bold cursor-move;
+    @apply bg-purple-800 px-5 py-3 text-white font-bold cursor-move flex justify-between items-center;
+  }
+  &__close-button {
+    @apply p-1
   }
   &__container {
     @apply flex-1 overflow-auto;

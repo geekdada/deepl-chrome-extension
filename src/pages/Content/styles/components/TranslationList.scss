@@ -1,6 +1,9 @@
 .ate_TranslationList {
   @apply divide-y divide-gray-200 divide-solid;
 
+  &__empty {
+    @apply py-2 text-center text-gray-500;
+  }
   &__item {
     @apply border-l-0 border-r-0;
   }

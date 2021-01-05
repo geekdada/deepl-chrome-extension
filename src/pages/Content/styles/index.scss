@@ -1,6 +1,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./components/Icon";
 @import './components/App';
 @import './components/TranslationList';
 @import './components/TranslationItem';
@@ -34,10 +35,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     background-repeat: no-repeat;
-    background-size: 30px 30px;
+    background-size: 25px 25px;
 }
 
 #ate-icon.active {
