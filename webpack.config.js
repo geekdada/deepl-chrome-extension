@@ -164,7 +164,7 @@ const options = {
 if (env.NODE_ENV === 'development') {
   options.devtool = 'eval-source-map'
 } else {
-  options.devtool = 'source-map'
+  options.devtool = 'inline-source-map'
   options.optimization = {
     minimize: true,
     minimizer: [
