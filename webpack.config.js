@@ -1,4 +1,4 @@
-const env = require('./utils/env')
+const env = require('./scripts/env')
 
 const webpack = require('webpack')
 const path = require('path')
