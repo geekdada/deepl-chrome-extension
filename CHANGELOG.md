@@ -1,4 +1,13 @@
-# 0.1.0 (2021-01-05)
+## [0.1.1](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.0...v0.1.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* setting value becomes undefined during the first time use ([2cfbf26](https://github.com/geekdada/a-translator-chrome-extension/commit/2cfbf26e2b836821ae339af51a1c18dc2ee7e469))
+
+
+
+# [0.1.0](https://github.com/geekdada/a-translator-chrome-extension/compare/9aa9d4392aedb375fe540fe9f64a0a8732b1c8cc...v0.1.0) (2021-01-05)
 
 
 ### Bug Fixes
