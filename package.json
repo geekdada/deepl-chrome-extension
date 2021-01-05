@@ -10,6 +10,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node scripts/webserver.js",
     "build": "cross-env NODE_ENV=production webpack",
+    "release": "run-s build && sh scripts/build.sh",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,html}'",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx"
   },
@@ -68,6 +69,7 @@
     "mini-css-extract-plugin": "^1.3.3",
     "node-sass": "^5.0.0",
     "notistack": "^1.0.3",
+    "npm-run-all": "^4.1.5",
     "pino": "^6.9.0",
     "postcss": "^8.2.2",
     "postcss-import": "^14.0.0",
