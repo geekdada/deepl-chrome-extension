@@ -1,16 +1,24 @@
 .ate_TranslationItem {
-  @apply p-3 text-gray-800 space-y-3 select-text cursor-pointer;
+  @apply p-3 text-gray-800 space-y-3 select-text;
 
   &__upper {
     @apply space-y-3;
   }
   &__lower {
-    @apply flex;
+    @apply flex justify-between items-center;
+
+    & > div {
+      @apply space-x-2
+    }
   }
   &__result {
     @apply rounded bg-yellow-50 p-3;
   }
   &__source-lang-tag {
     @apply px-2 py-1 bg-green-50 text-green-600 text-sm rounded;
+  }
+  &__copy-button,
+  &__jump-button {
+    @apply p-1;
   }
 }
