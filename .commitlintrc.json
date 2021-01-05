@@ -26,6 +26,7 @@
         "perf",
         "refactor",
         "revert",
+        "release",
         "style",
         "test",
         "sample"
