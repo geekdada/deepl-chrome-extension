@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
+import { useSnackbar } from 'notistack'
 
 import logger from '../../../common/logger'
 import { TranslateResult } from '../../../common/types'
@@ -16,6 +17,7 @@ const TranslationItem: React.FC<{
   const config = useConfig()
   const [loading, setLoading] = useState(true)
   const [result, setResult] = useState<string>()
+  const { enqueueSnackbar } = useSnackbar()
 
   const findOriginal = () => {
     const { parentElement } = job
@@ -58,6 +60,7 @@ const TranslationItem: React.FC<{
         })
 
         setLoading(false)
+        enqueueSnackbar(`翻译失败：${err.message}`, { variant: 'error' })
       })
   }, [job, config])
 

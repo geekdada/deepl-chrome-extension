@@ -4,6 +4,7 @@ import Draggable, { DraggableEventHandler } from 'react-draggable'
 import cc from 'chrome-call'
 // @ts-ignore
 import ScrollToBottom from 'react-scroll-to-bottom'
+import { SnackbarProvider } from 'notistack'
 
 import logger from '../../../../common/logger'
 import { Config } from '../../../../common/types'
@@ -90,19 +91,23 @@ const App: React.FC = () => {
         onStart={onDragStart}
         defaultPosition={appPosition}>
         <div className={clsx(['ate_App', close && 'ate_App--inactive'])}>
-          <div className="ate_App__header">
-            <span>A Translator</span>
-            <span>
-              <IconButton
-                className="ate_App__close-button"
-                onClick={() => setClose(true)}>
-                <CloseIcon />
-              </IconButton>
-            </span>
-          </div>
-          <ScrollToBottom className="ate_App__container" debug={false}>
-            <TranslationList />
-          </ScrollToBottom>
+          <SnackbarProvider
+            maxSnack={3}
+            domRoot={document.querySelector('.ate_App') as HTMLDivElement}>
+            <div className="ate_App__header">
+              <span>A Translator</span>
+              <span>
+                <IconButton
+                  className="ate_App__close-button"
+                  onClick={() => setClose(true)}>
+                  <CloseIcon />
+                </IconButton>
+              </span>
+            </div>
+            <ScrollToBottom className="ate_App__container" debug={false}>
+              <TranslationList />
+            </ScrollToBottom>
+          </SnackbarProvider>
         </div>
       </Draggable>
     </ConfigContext.Provider>
