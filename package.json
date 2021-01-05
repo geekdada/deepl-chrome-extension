@@ -10,7 +10,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node scripts/webserver.js",
     "build": "cross-env NODE_ENV=production webpack",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,html}'"
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,html}'",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
