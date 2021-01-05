@@ -4,5 +4,5 @@ set -e
 
 mkdir -p ./release
 
-zip -r "extension.zip" "./build"
+cd build && zip -r  "../extension.zip" "./" && cd -
 mv extension.* ./release
