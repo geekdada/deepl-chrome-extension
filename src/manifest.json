@@ -1,6 +1,11 @@
 {
   "name": "A Translator",
-  "permissions": ["<all_urls>", "storage", "tabs"],
+  "permissions": [
+    "https://a-translator-api.nerdynerd.org/*",
+    "https://a-translator-api-cf.nerdynerd.org/*",
+    "storage",
+    "tabs"
+  ],
   "options_ui": {
     "page": "options.html",
     "chrome_style": false,
@@ -20,7 +25,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": ["http://*/*", "https://*/*"],
       "js": ["contentScript.bundle.js"],
       "css": ["contentScript.bundle.css"],
       "run_at": "document_end"
