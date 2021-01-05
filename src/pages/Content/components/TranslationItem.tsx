@@ -29,6 +29,7 @@ const TranslationItem: React.FC<{
     const { parentElement } = job
 
     if (!parentElement) {
+      enqueueSnackbar('已找不到原文', { variant: 'info' })
       return
     }
 
@@ -109,6 +110,7 @@ const TranslationItem: React.FC<{
             <Clipboard
               option-text={() => result}
               button-title="复制翻译结果"
+              onSuccess={() => enqueueSnackbar('复制成功')}
               component={IconButton}
               className="ate_TranslationItem__copy-button">
               <ClipboardCopy />
