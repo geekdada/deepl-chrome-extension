@@ -1,11 +1,6 @@
 {
   "name": "A Translator",
-  "permissions": [
-    "https://a-translator-api.nerdynerd.org/*",
-    "https://a-translator-api-cf.nerdynerd.org/*",
-    "storage",
-    "tabs"
-  ],
+  "permissions": ["http://*/*", "https://*/*", "storage", "tabs"],
   "options_ui": {
     "page": "options.html",
     "chrome_style": false,

@@ -117,18 +117,12 @@ const options = {
           force: true,
           transform: function (content) {
             const manifest = JSON.parse(content.toString())
-            const { permissions } = manifest
 
-            if (env.NODE_ENV !== 'production') {
-              permissions.push('http://localhost:1337/*')
-            }
-
-            // generates the manifest file using the package.json informations
+            // generates the manifest file using the package.json information
             return Buffer.from(
               JSON.stringify(
                 {
                   ...manifest,
-                  permissions,
                   description: process.env.npm_package_description,
                   version: process.env.npm_package_version,
                 },
