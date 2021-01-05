@@ -39,6 +39,8 @@
     height: 25px;
     background-repeat: no-repeat;
     background-size: 25px 25px;
+
+    @apply rounded;
 }
 
 #ate-icon.active {

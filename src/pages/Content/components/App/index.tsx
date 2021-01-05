@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
 import cc from 'chrome-call'
 // @ts-ignore
@@ -19,6 +19,22 @@ const App: React.FC = () => {
   const [config, setConfig] = useState<ConfigState>()
   const [close, setClose] = useState(false)
   const dispatch = useTranslateJobsDispatch()
+
+  const appPosition = useMemo(() => {
+    const vw = Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0,
+    )
+    const vh = Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0,
+    )
+
+    return {
+      x: vw - 450 - 20,
+      y: vh - 600 - 20,
+    }
+  }, [])
 
   const onNewJob = useCallback(
     (job: TranslateJob) => {
@@ -72,7 +88,7 @@ const App: React.FC = () => {
       <Draggable
         handle=".ate_App__header"
         onStart={onDragStart}
-        defaultPosition={{ x: 20, y: 20 }}>
+        defaultPosition={appPosition}>
         <div className={clsx(['ate_App', close && 'ate_App--inactive'])}>
           <div className="ate_App__header">
             <span>A Translator</span>
