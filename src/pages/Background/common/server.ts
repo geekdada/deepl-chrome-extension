@@ -21,7 +21,7 @@ const onTranslate: Handler<{
     const config: Config = await cc(chrome.storage.sync, 'get')
     const client = new Client(config.token)
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.USE_MOCK_TRANSLATE === 'true') {
       resolve({
         translations: [
           {

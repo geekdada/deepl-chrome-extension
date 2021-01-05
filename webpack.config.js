@@ -1,3 +1,5 @@
+const env = require('./utils/env')
+
 const webpack = require('webpack')
 const path = require('path')
 const fileSystem = require('fs-extra')
@@ -6,8 +8,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
-const env = require('./utils/env')
 
 const ASSET_PATH = process.env.ASSET_PATH || '/'
 
@@ -36,7 +36,7 @@ if (fileSystem.existsSync(secretsPath)) {
 }
 
 const options = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: env.NODE_ENV || 'development',
   entry: {
     options: path.join(__dirname, 'src/pages/Options/index.tsx'),
     popup: path.join(__dirname, 'src/pages/Popup/index.jsx'),
@@ -108,7 +108,7 @@ const options = {
       cleanStaleWebpackAssets: true,
     }),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin(Object.keys(env)),
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),
