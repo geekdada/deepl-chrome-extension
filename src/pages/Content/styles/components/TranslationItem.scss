@@ -12,10 +12,10 @@
     }
   }
   &__original {
-    @apply bg-gray-50 hover:bg-gray-100 p-3 rounded cursor-pointer;
+    @apply bg-gray-50 hover:bg-gray-100 p-3 rounded cursor-pointer leading-normal;
 
     .ReactCollapse--collapse {
-      min-height: 36px;
+      min-height: 48px;
       will-change: height;
       transition-property: height;
 
@@ -26,7 +26,7 @@
     }
   }
   &__result {
-    @apply rounded bg-yellow-50 p-3 space-y-2;
+    @apply rounded bg-yellow-50 p-3 space-y-2 leading-normal;
   }
   &__source-lang-tag {
     @apply px-2 py-1 bg-green-50 text-green-600 text-sm rounded;

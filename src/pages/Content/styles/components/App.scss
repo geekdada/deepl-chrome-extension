@@ -2,14 +2,14 @@
   position: absolute;
   width: 450px;
   height: 600px;
-  z-index: 9998;
+  z-index: 99998;
   @apply bg-white shadow rounded-lg overflow-hidden flex flex-col;
 
   &--inactive {
     display: none;
   }
   &__header {
-    @apply bg-purple-800 px-5 py-3 text-white font-bold cursor-move flex justify-between items-center;
+    @apply bg-purple-800 px-5 py-3 text-white font-bold text-lg cursor-move flex justify-between items-center;
   }
   &__close-button {
     @apply p-1
