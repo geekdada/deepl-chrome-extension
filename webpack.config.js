@@ -108,7 +108,7 @@ const options = {
       cleanStaleWebpackAssets: true,
     }),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(Object.keys(env)),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'USE_MOCK_TRANSLATE']),
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),

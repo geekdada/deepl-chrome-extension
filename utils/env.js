@@ -14,5 +14,4 @@ require('dotenv').config({
 module.exports = {
   NODE_ENV,
   PORT: process.env.PORT || 3000,
-  USE_MOCK_TRANSLATE: process.env.USE_MOCK_TRANSLATE === 'true',
 }

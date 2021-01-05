@@ -54,7 +54,7 @@ const TranslationItem: React.FC<{
       .catch((err) => {
         logger.error({
           msg: 'translate failed',
-          err,
+          data: err,
         })
 
         setLoading(false)
