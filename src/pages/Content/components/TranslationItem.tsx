@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
 import { useSnackbar } from 'notistack'
 import { Collapse } from 'react-collapse'
@@ -17,9 +17,13 @@ const TranslationItem: React.FC<{
 }> = ({ job }) => {
   const config = useConfig()
   const [loading, setLoading] = useState(true)
-  const [result, setResult] = useState<string>()
+  const [result, setResult] = useState<string[]>()
   const [collapse, setCollapse] = useState(true)
   const { enqueueSnackbar } = useSnackbar()
+
+  const textContent = useMemo((): string[] => {
+    return job.text.split('\n')
+  }, [job.text])
 
   const findOriginal = () => {
     const { parentElement } = job
@@ -51,7 +55,7 @@ const TranslationItem: React.FC<{
           payload,
         })
 
-        setResult(payload.translations.map((item) => item.text).join('\n'))
+        setResult(payload.translations.map((item) => item.text))
 
         setLoading(false)
       })
@@ -73,7 +77,11 @@ const TranslationItem: React.FC<{
           className="ate_TranslationItem__original"
           onClick={() => setCollapse((prev) => !prev)}>
           <Collapse isOpened={!collapse}>
-            <div>{job.text}</div>
+            <>
+              {textContent.map((item, index) => (
+                <div key={index}>{item}</div>
+              ))}
+            </>
           </Collapse>
         </div>
 
@@ -81,7 +89,11 @@ const TranslationItem: React.FC<{
           <div className="ate_TranslationItem__result">翻译中…</div>
         ) : undefined}
         {result ? (
-          <div className="ate_TranslationItem__result">{result}</div>
+          <div className="ate_TranslationItem__result">
+            {result.map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
+          </div>
         ) : undefined}
       </div>
       <div className="ate_TranslationItem__lower">

@@ -142,6 +142,7 @@ const getTextSelection = (
   selection: RangySelection,
 ): TextSelection & { selection: RangySelection } => {
   const text = selection.toString().trim()
+  // const html = selection.toHtml().trim()
 
   return {
     selection,

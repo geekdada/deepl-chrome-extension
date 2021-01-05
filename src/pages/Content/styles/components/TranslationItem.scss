@@ -21,9 +21,12 @@
 
       @apply ease-in-out duration-300;
     }
+    .ReactCollapse--content {
+      @apply space-y-2;
+    }
   }
   &__result {
-    @apply rounded bg-yellow-50 p-3;
+    @apply rounded bg-yellow-50 p-3 space-y-2;
   }
   &__source-lang-tag {
     @apply px-2 py-1 bg-green-50 text-green-600 text-sm rounded;
