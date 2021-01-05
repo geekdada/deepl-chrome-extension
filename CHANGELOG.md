@@ -1,3 +1,17 @@
+## [0.1.2](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.1...v0.1.2) (2021-01-05)
+
+
+### Bug Fixes
+
+* style issue ([becf98e](https://github.com/geekdada/a-translator-chrome-extension/commit/becf98eb50bbc1f6db0a7117203ca15fead89fe5))
+
+
+### Features
+
+* add notification ([ca78404](https://github.com/geekdada/a-translator-chrome-extension/commit/ca784049d4e0a70d8ee598988df690e51bdf1f8b))
+
+
+
 ## [0.1.1](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.0...v0.1.1) (2021-01-05)
 
 
