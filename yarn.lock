@@ -1531,6 +1531,13 @@
   resolved "https://registry.yarnpkg.com/@types/rangy/-/rangy-0.0.33.tgz#9f1afff01b4ba840360713a2c2ef3a36e7d49576"
   integrity sha512-j2lhwVgbxZORhiB7yP+cly6+ow75MYmyHIkkSBwDl7XzrO5TMUECKkXqCf0pZVDjW5TgulIvhKg7SyEWSSgzmA==
 
+"@types/react-collapse@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-collapse/-/react-collapse-5.0.0.tgz#ffe6173db457b4b147319e1bd522b5b9d3d68fac"
+  integrity sha512-iM5QPtS0JVbL5TWm8vilaG4iYiQIFSSqXDHcRUA50qBLSgC0GURk7VZYmgo6u4YF0LnpvKBQYRhPv1ut9DukIg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^17.0.0":
   version "17.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.0.tgz#b3b691eb956c4b3401777ee67b900cb28415d95a"
@@ -6313,6 +6320,11 @@ react-clipboard.js@^2.0.16:
     "@types/clipboard" "^2.0.1"
     clipboard "^2.0.0"
     prop-types "^15.5.0"
+
+react-collapse@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.1.0.tgz#36f69ecb0fe797f976aaf5e4f2b2c248d2760140"
+  integrity sha512-5v0ywsn9HjiR/odNzbRDs0RZfrnbdSippJebWOBCFFDA12Vx8DddrbI4qWVf1P2wTiVagrpcSy07AU0b6+gM9Q==
 
 react-dom@^17.0.1:
   version "17.0.1"

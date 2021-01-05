@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
 import { useSnackbar } from 'notistack'
+import { Collapse } from 'react-collapse'
 
 import logger from '../../../common/logger'
 import { TranslateResult } from '../../../common/types'
@@ -17,6 +18,7 @@ const TranslationItem: React.FC<{
   const config = useConfig()
   const [loading, setLoading] = useState(true)
   const [result, setResult] = useState<string>()
+  const [collapse, setCollapse] = useState(true)
   const { enqueueSnackbar } = useSnackbar()
 
   const findOriginal = () => {
@@ -67,13 +69,14 @@ const TranslationItem: React.FC<{
   return (
     <div className="ate_TranslationItem">
       <div className="ate_TranslationItem__upper">
-        <div>
-          {job.text.length > 100 ? (
-            <div>{job.text.substring(0, 100)}...</div>
-          ) : (
+        <div
+          className="ate_TranslationItem__original"
+          onClick={() => setCollapse((prev) => !prev)}>
+          <Collapse isOpened={!collapse}>
             <div>{job.text}</div>
-          )}
+          </Collapse>
         </div>
+
         {loading ? (
           <div className="ate_TranslationItem__result">翻译中…</div>
         ) : undefined}

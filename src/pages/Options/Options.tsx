@@ -9,13 +9,14 @@ import { Global } from '@emotion/react'
 import cc from 'chrome-call'
 
 import Client from '../../common/api'
-import { Config } from '../../common/types'
+import { APIRegions, Config } from '../../common/types'
 
 import OptionSection from './components/OptionSection'
 
 const Options: React.FC = () => {
   const [targetLang, setTargetLang] = useState('ZH')
   const [token, setToken] = useState('')
+  const [region, setRegion] = useState<APIRegions>('default')
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault()
@@ -23,6 +24,7 @@ const Options: React.FC = () => {
       await cc(chrome.storage.sync, 'set', {
         targetLang,
         token,
+        region,
       })
 
       window.alert('保存成功')
@@ -37,7 +39,7 @@ const Options: React.FC = () => {
       return
     }
 
-    const client = new Client(token)
+    const client = new Client(token, region)
 
     client
       .translate('This is a test message.', 'ZH')
@@ -53,6 +55,7 @@ const Options: React.FC = () => {
     cc(chrome.storage.sync, 'get').then((config: Config) => {
       setTargetLang(config.targetLang)
       setToken(config.token)
+      setRegion(config.region)
     })
   }, [])
 
@@ -90,7 +93,7 @@ const Options: React.FC = () => {
             <OptionSection title={'目标语言'}>
               <select
                 tw="px-4 py-3 rounded-md"
-                name="target-language"
+                name="target-lang"
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value)}>
                 <option value="ZH">中文</option>
@@ -117,6 +120,20 @@ const Options: React.FC = () => {
                 value={token}
                 onChange={(e) => setToken(e.target.value)}
               />
+            </OptionSection>
+
+            <OptionSection title={'API Region'}>
+              <select
+                tw="px-4 py-3 rounded-md"
+                name="region"
+                value={region}
+                onChange={(e) => setRegion(e.target.value as APIRegions)}>
+                <option value="default">默认</option>
+                <option value="global">全球（非亚洲地区）</option>
+                {process.env.NODE_ENV !== 'production' ? (
+                  <option value="dev">DEV</option>
+                ) : undefined}
+              </select>
             </OptionSection>
           </div>
 

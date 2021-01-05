@@ -1,13 +1,13 @@
 import axios from 'axios'
 
-import { TranslateResult } from './types'
+import { APIRegions, TranslateResult } from './types'
 
 class Client {
   axios = axios.create({
-    baseURL: 'https://a-translator-api.nerdynerd.org',
+    baseURL: this.getAPI(),
   })
 
-  constructor(private apiToken: string) {
+  constructor(private apiToken: string, private region: APIRegions) {
     this.axios.interceptors.response.use(
       function (response) {
         return response
@@ -33,6 +33,17 @@ class Client {
     form.append('text', text)
 
     return this.axios.post('/v2/translate', form).then((res) => res.data)
+  }
+
+  private getAPI(): string {
+    switch (this.region) {
+      case 'global':
+        return 'https://a-translator-api.nerdynerd.org'
+      case 'dev':
+        return 'http://localhost:1337'
+      default:
+        return 'https://a-translator-api.nerdynerd.org'
+    }
   }
 }
 

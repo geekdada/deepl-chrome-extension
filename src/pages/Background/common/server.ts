@@ -19,7 +19,7 @@ const onTranslate: Handler<{
     })
 
     const config: Config = await cc(chrome.storage.sync, 'get')
-    const client = new Client(config.token)
+    const client = new Client(config.token, config.region)
 
     if (process.env.USE_MOCK_TRANSLATE === 'true') {
       resolve({

@@ -1,6 +1,7 @@
 export interface Config {
   token: string
   targetLang: SupportLanguages
+  region: APIRegions
 }
 
 export type SupportLanguages =
@@ -15,6 +16,8 @@ export type SupportLanguages =
   | 'NL'
   | 'PL'
   | 'RU'
+
+export type APIRegions = 'default' | 'global' | 'dev'
 
 export type TranslateResult = {
   translations: Array<{
