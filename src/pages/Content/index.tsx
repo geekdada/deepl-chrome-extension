@@ -75,6 +75,16 @@ const onMouseUp = (e: MouseEvent) => {
   const iconElement = document.querySelector<HTMLSpanElement>('#ate-icon')
 
   if (selection.toString().trim() && iconElement) {
+    const appElement = document.querySelector<HTMLDivElement>('.ate_App')
+
+    if (
+      appElement &&
+      e.target instanceof Element &&
+      appElement.contains(e.target)
+    ) {
+      return
+    }
+
     lastSelection = getTextSelection(selection)
     iconElement.style.top = e.pageY + 20 + 'px'
     iconElement.style.left = e.pageX + 'px'

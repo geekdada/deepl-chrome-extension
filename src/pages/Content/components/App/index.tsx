@@ -58,9 +58,10 @@ const App: React.FC = () => {
 
   const onDragStart: DraggableEventHandler = (e) => {
     if (
+      e.target instanceof Element &&
       document
         .querySelector<HTMLButtonElement>('.ate_App__close-button')
-        ?.contains(e.target as Node)
+        ?.contains(e.target)
     ) {
       return false
     }
