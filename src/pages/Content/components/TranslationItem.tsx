@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
 import { useSnackbar } from 'notistack'
 import { Collapse } from 'react-collapse'
+import scrollParent from 'scrollparent'
 
 import logger from '../../../common/logger'
 import { TranslateResult } from '../../../common/types'
@@ -34,8 +35,22 @@ const TranslationItem: React.FC<{
       return
     }
 
+    const scrollContainer = scrollParent(parentElement)
+
     if (parentElement instanceof HTMLElement) {
-      window.scrollTo(0, parentElement.offsetTop - 20)
+      if (scrollContainer === document.body) {
+        document.documentElement.scrollTo({
+          top: parentElement.offsetTop - 20,
+          left: 0,
+          behavior: 'smooth',
+        })
+      } else {
+        scrollContainer.scrollTo({
+          top: parentElement.offsetTop - 20,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }
     }
   }
 

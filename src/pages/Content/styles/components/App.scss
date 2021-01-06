@@ -3,6 +3,7 @@
   width: 450px;
   height: 600px;
   z-index: 1;
+  will-change: transform;
   @apply bg-white shadow rounded-lg overflow-hidden flex flex-col;
 
   &--inactive {
