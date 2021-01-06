@@ -1,6 +1,4 @@
-import { v4 as uuid } from 'uuid'
-
-import { TextSelection, TranslateJob } from './types'
+import { TranslateJob } from './types'
 
 class TranslationStack {
   stack: Array<TranslateJob> = []
@@ -19,17 +17,11 @@ class TranslationStack {
     this.onPush = undefined
   }
 
-  push(job: TextSelection) {
+  push(job: TranslateJob) {
     if (this.onPush) {
-      this.onPush({
-        ...job,
-        id: uuid(),
-      })
+      this.onPush(job)
     } else {
-      this.stack.push({
-        ...job,
-        id: uuid(),
-      })
+      this.stack.push(job)
     }
   }
 }

@@ -26,14 +26,17 @@ const TranslationItem: React.FC<{
   }, [job.text])
 
   const findOriginal = () => {
-    const { parentElement } = job
+    const { anchorId } = job
+    const parentElement = document.querySelector(`.${anchorId}`)
 
     if (!parentElement) {
       enqueueSnackbar('已找不到原文', { variant: 'info' })
       return
     }
 
-    window.scrollTo(0, parentElement.offsetTop - 20)
+    if (parentElement instanceof HTMLElement) {
+      window.scrollTo(0, parentElement.offsetTop - 20)
+    }
   }
 
   useEffect(() => {

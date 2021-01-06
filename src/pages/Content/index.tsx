@@ -1,5 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { v4 as uuid } from 'uuid'
 // @ts-ignore
 import smoothScrollPolyfill from 'smoothscroll-polyfill'
 import * as rangy from 'rangy'
@@ -11,14 +12,14 @@ import logger from '../../common/logger'
 import { SupportLanguages } from '../../common/types'
 import server from './common/server'
 import translationStack from './common/translation-stack'
-import { TextSelection } from './common/types'
+import { TextSelection, TranslateJob } from './common/types'
 import { getFirstRange } from './common/utils'
 import App from './components/App'
 import './styles/index.scss'
 import { TranslateJobsProvider } from './providers/translate-jobs'
 
 let isAppAttached = false
-let lastSelection: (TextSelection & { selection: RangySelection }) | undefined
+let lastSelection: TextSelection | undefined
 let highlighter: any
 
 const main = async () => {
@@ -85,7 +86,9 @@ const onMouseUp = (e: MouseEvent) => {
       return
     }
 
+    // update last selection
     lastSelection = getTextSelection(selection)
+
     iconElement.style.top = e.pageY + 20 + 'px'
     iconElement.style.left = e.pageX + 'px'
     iconElement.classList.add('active')
@@ -99,9 +102,9 @@ const onMouseUp = (e: MouseEvent) => {
   }
 }
 
-const onClickTranslate = (selection: TextSelection) => {
+const onClickTranslate = (job: TranslateJob) => {
   initApp()
-  translationStack.push(selection)
+  translationStack.push(job)
 }
 
 const attachListeners = () => {
@@ -116,11 +119,21 @@ const attachListeners = () => {
       })
 
       if (lastSelection) {
+        const id = uuid()
+        const anchorId = `ate_anchor_${id}`
+
+        if (lastSelection.selection.anchorNode?.parentElement) {
+          lastSelection.selection.anchorNode?.parentElement.classList.add(
+            anchorId,
+          )
+        }
+
         highlightSelection(lastSelection.selection)
 
         onClickTranslate({
+          anchorId,
+          id,
           text: lastSelection.text,
-          parentElement: lastSelection.parentElement,
           sourceLang: lastSelection.sourceLang,
         })
 
@@ -148,15 +161,12 @@ const highlightSelection = (selection: RangySelection) => {
   highlighter.highlightSelection('ate-highlight')
 }
 
-const getTextSelection = (
-  selection: RangySelection,
-): TextSelection & { selection: RangySelection } => {
+const getTextSelection = (selection: RangySelection): TextSelection => {
   const text = selection.toString().trim()
   // const html = selection.toHtml().trim()
 
   return {
     selection,
-    parentElement: selection.anchorNode?.parentElement ?? undefined,
     sourceLang: getSourceLang(),
     text,
   }

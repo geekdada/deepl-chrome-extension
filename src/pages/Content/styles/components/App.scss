@@ -2,7 +2,7 @@
   position: absolute;
   width: 450px;
   height: 600px;
-  z-index: 99998;
+  z-index: 1;
   @apply bg-white shadow rounded-lg overflow-hidden flex flex-col;
 
   &--inactive {
