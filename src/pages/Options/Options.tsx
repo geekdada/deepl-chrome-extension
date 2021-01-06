@@ -122,7 +122,7 @@ const Options: React.FC = () => {
               />
             </OptionSection>
 
-            <OptionSection title={'API Region'}>
+            <OptionSection title={'API 地区'}>
               <select
                 tw="px-4 py-3 rounded-md"
                 name="region"
@@ -134,6 +134,20 @@ const Options: React.FC = () => {
                   <option value="dev">DEV</option>
                 ) : undefined}
               </select>
+            </OptionSection>
+
+            <OptionSection title={'🔗 相关链接'}>
+              <ul>
+                <li>
+                  <a
+                    tw="text-blue-600 cursor-pointer"
+                    href="https://a-translator.royli.dev/dashboard"
+                    target="_blank"
+                    rel="noreferrer">
+                    → 后台
+                  </a>
+                </li>
+              </ul>
             </OptionSection>
           </div>
 
