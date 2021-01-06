@@ -75,74 +75,95 @@ const onMouseUp = (e: MouseEvent) => {
   const selection = rangy.getSelection()
   const iconElement = document.querySelector<HTMLSpanElement>('#ate-icon')
 
-  if (selection.toString().trim() && iconElement) {
+  if (!iconElement || !(e.target instanceof Element)) {
+    return
+  }
+
+  /**
+   * 点击翻译按钮
+   */
+  if (e.target === iconElement) {
+    e.stopPropagation()
+    e.preventDefault()
+
+    logger.debug({
+      msg: 'lastSelection',
+      lastSelection,
+    })
+
+    if (lastSelection) {
+      const id = uuid()
+      const anchorId = `ate_anchor_${id}`
+
+      if (lastSelection.selection.anchorNode?.parentElement) {
+        lastSelection.selection.anchorNode?.parentElement.classList.add(
+          anchorId,
+        )
+      }
+
+      highlightSelection(lastSelection.selection)
+
+      addTranslateJob({
+        anchorId,
+        id,
+        text: lastSelection.text,
+        sourceLang: lastSelection.sourceLang,
+      })
+
+      lastSelection?.selection.removeAllRanges()
+      lastSelection = undefined
+      iconElement.classList.remove('active')
+    }
+
+    return
+  }
+
+  /**
+   * 没有点击翻译按钮
+   */
+  if (selection.toString().trim()) {
+    /**
+     * 选择了文字
+     */
+
     const appElement = document.querySelector<HTMLDivElement>('.ate_App')
 
-    if (
-      appElement &&
-      e.target instanceof Element &&
-      appElement.contains(e.target)
-    ) {
+    if (appElement && appElement.contains(e.target)) {
+      // 焦点处在 App 内，让按钮消失，清空上一次的选择
+      iconElement.classList.remove('active')
+      lastSelection = undefined
+
       return
     }
 
-    // update last selection
     lastSelection = getTextSelection(selection)
 
     iconElement.style.top = e.pageY + 20 + 'px'
     iconElement.style.left = e.pageX + 'px'
     iconElement.classList.add('active')
   } else {
-    // @ts-ignore
-    if (e.target?.id !== 'ate-icon') {
-      lastSelection = undefined
-    }
+    /**
+     * 没有选择文字，有以下情况
+     *
+     * 1. 点击鼠标
+     * 2. 空选择
+     * 3. 拖拽
+     */
 
-    iconElement?.classList.remove('active')
+    lastSelection = undefined
+
+    // 只要没有选中文字都让按钮消失
+    iconElement.classList.remove('active')
   }
 }
 
-const onClickTranslate = (job: TranslateJob) => {
+const addTranslateJob = (job: TranslateJob) => {
   initApp()
   translationStack.push(job)
 }
 
 const attachListeners = () => {
   document.addEventListener('mouseup', onMouseUp, false)
-
-  document
-    .querySelector<HTMLSpanElement>('#ate-icon')
-    ?.addEventListener('click', function () {
-      logger.debug({
-        msg: 'lastSelection',
-        lastSelection,
-      })
-
-      if (lastSelection) {
-        const id = uuid()
-        const anchorId = `ate_anchor_${id}`
-
-        if (lastSelection.selection.anchorNode?.parentElement) {
-          lastSelection.selection.anchorNode?.parentElement.classList.add(
-            anchorId,
-          )
-        }
-
-        highlightSelection(lastSelection.selection)
-
-        onClickTranslate({
-          anchorId,
-          id,
-          text: lastSelection.text,
-          sourceLang: lastSelection.sourceLang,
-        })
-
-        setTimeout(() => {
-          lastSelection?.selection.removeAllRanges()
-          this.classList.remove('active')
-        }, 0)
-      }
-    })
 
   server.on('connect', (client) => {
     client.on('open_extension', () => {
