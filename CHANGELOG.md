@@ -1,3 +1,17 @@
+## [0.1.3](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.2...v0.1.3) (2021-01-06)
+
+
+### Bug Fixes
+
+* scroll bug ([f9204ba](https://github.com/geekdada/a-translator-chrome-extension/commit/f9204ba32b8f20f7388d7501e885cf7fabad49b8))
+
+
+### Features
+
+* add link to dashboard ([8c48313](https://github.com/geekdada/a-translator-chrome-extension/commit/8c48313f7e9d2f378398d35f8a7887645cb54de7))
+
+
+
 ## [0.1.2](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.1...v0.1.2) (2021-01-05)
 
 
