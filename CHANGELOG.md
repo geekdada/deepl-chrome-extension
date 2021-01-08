@@ -1,3 +1,13 @@
+## [0.1.5](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.4...v0.1.5) (2021-01-08)
+
+
+### Bug Fixes
+
+* close button becomes white on some occasions ([b5c22eb](https://github.com/geekdada/a-translator-chrome-extension/commit/b5c22ebb2520c35cb3ba79fe22dbe052470ed0d4))
+* remove tabs permission ([5ad6bd5](https://github.com/geekdada/a-translator-chrome-extension/commit/5ad6bd55e34e508373fb99f42d77f7f7e4b51d1b))
+
+
+
 ## [0.1.4](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.3...v0.1.4) (2021-01-06)
 
 
