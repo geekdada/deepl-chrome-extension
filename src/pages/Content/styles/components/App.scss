@@ -13,7 +13,7 @@
     @apply bg-purple-800 px-5 py-3 text-white font-bold text-lg cursor-move flex justify-between items-center;
   }
   &__close-button {
-    @apply p-1
+    @apply p-1 text-gray-800;
   }
   &__container {
     @apply flex-1 overflow-auto;
