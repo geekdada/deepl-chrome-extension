@@ -1,3 +1,12 @@
+## [0.1.6](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.5...v0.1.6) (2021-01-10)
+
+
+### Bug Fixes
+
+* app positioning ([7bbb68b](https://github.com/geekdada/a-translator-chrome-extension/commit/7bbb68bc475234679277c400476e3ee0c3440cf9))
+
+
+
 ## [0.1.5](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.4...v0.1.5) (2021-01-08)
 
 
