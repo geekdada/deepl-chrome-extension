@@ -22,14 +22,8 @@ const App: React.FC = () => {
   const dispatch = useTranslateJobsDispatch()
 
   const appPosition = useMemo(() => {
-    const vw = Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0,
-    )
-    const vh = Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0,
-    )
+    const vw = window.top.innerWidth || window.innerWidth || 0
+    const vh = window.top.innerHeight || window.innerHeight || 0
 
     return {
       x: vw - 450 - 20,
