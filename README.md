@@ -2,9 +2,13 @@
 
 ## 安装
 
-### Chrome Extension Store
+### Chrome Web Store
 
-正在审核
+[<img src="./assets/store.png" width=220>](https://chrome.google.com/webstore/detail/a-translator/bpcbgnkijachkbknbhjmijehipcphndd)
+
+### 直接下载 crx 文件（Edge, 360 浏览器、猎豹浏览器等）
+
+点击 [这里](https://drive.service.dada.li/A%20Translator/Chrome%20Extension/) 下载，然后将 crx 文件拖入「插件」页面即可安装。
 
 ### 本地安装插件
 
@@ -12,13 +16,13 @@
 
 ## 配置
 
-请在插件配置页面填入 A Translator 的 API Token。
+请在插件配置页面填入 A Translator 的 [API Token](https://a-translator.royli.dev/dashboard/profile)。
 
 ## 使用
 
 在网页内选择内容即可点击图标翻译。
 
-![CleanShot 2021-01-05 at 20.48.25@2x.png](https://i.loli.net/2021/01/05/lKYxgU6L8NHBJfi.png)
+![](./assets/screenshot.png)
 
 ## License
 
