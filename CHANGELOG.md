@@ -1,3 +1,13 @@
+# [0.2.0-0](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.6...v0.2.0-0) (2021-01-17)
+
+
+### Features
+
+* add polyfill for old browsers ([0e38a77](https://github.com/geekdada/a-translator-chrome-extension/commit/0e38a77ea2fe224ae5086d2930ce9d17cc89530a))
+* optimize string selection ([7ea8ac7](https://github.com/geekdada/a-translator-chrome-extension/commit/7ea8ac71fb88146e46b6608bc5eeacae659762ac))
+
+
+
 ## [0.1.6](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.5...v0.1.6) (2021-01-10)
 
 
