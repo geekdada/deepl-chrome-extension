@@ -1,19 +1,14 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { v4 as uuid } from 'uuid'
-// @ts-ignore
 import smoothScrollPolyfill from 'smoothscroll-polyfill'
-import * as rangy from 'rangy'
-// @ts-ignore
-import 'rangy/lib/rangy-classapplier'
-import 'rangy/lib/rangy-highlighter'
 
 import logger from '../../common/logger'
-import { SupportLanguages } from '../../common/types'
+import rangy from '../../common/rangy'
 import server from './common/server'
 import translationStack from './common/translation-stack'
 import { TextSelection, TranslateJob } from './common/types'
-import { getFirstRange } from './common/utils'
+import { getDocumentLang, getFirstRange } from './common/utils'
 import App from './components/App'
 import './styles/index.scss'
 import { TranslateJobsProvider } from './providers/translate-jobs'
@@ -39,13 +34,9 @@ const main = async () => {
 
   window.addEventListener('load', () => {
     try {
-      // @ts-ignore
       rangy.init()
-      // @ts-ignore
       highlighter = rangy.createHighlighter()
-      // @ts-ignore
       highlighter.addClassApplier(
-        // @ts-ignore
         rangy.createClassApplier('ate-highlight', {
           ignoreWhiteSpace: true,
           tagNames: ['span', 'a'],
@@ -183,68 +174,30 @@ const highlightSelection = (selection: RangySelection) => {
 }
 
 const getTextSelection = (selection: RangySelection): TextSelection => {
-  const text = selection.toString().trim()
-  // const html = selection.toHtml().trim()
+  let text: string
+
+  if ('toString' in selection.nativeSelection) {
+    text = selection.nativeSelection.toString().trim()
+  } else {
+    text = selection.toString().trim()
+  }
+
+  const parentElement = selection.anchorNode?.parentElement
+
+  if (
+    parentElement &&
+    (parentElement.closest('pre') || parentElement.closest('.highlight'))
+  ) {
+    text = text.replaceAll('\n', ' ')
+  }
+
+  logger.debug(text.split('\n'))
 
   return {
     selection,
-    sourceLang: getSourceLang(),
+    sourceLang: getDocumentLang(),
     text,
   }
-}
-
-const getSourceLang = (): SupportLanguages | undefined => {
-  const html = document.querySelector('html')
-
-  if (!html) return
-
-  if (!html.hasAttribute('lang')) {
-    return
-  }
-
-  const lang = (html.getAttribute('lang') as string).toUpperCase()
-
-  if (lang.startsWith('ZH')) {
-    return 'ZH'
-  }
-  if (lang.startsWith('EN')) {
-    return 'EN'
-  }
-  if (lang.startsWith('EN')) {
-    return 'EN'
-  }
-  if (lang.startsWith('JA')) {
-    return 'JA'
-  }
-  if (lang.startsWith('DE')) {
-    return 'DE'
-  }
-  if (lang.startsWith('FR')) {
-    return 'FR'
-  }
-  if (lang.startsWith('ES')) {
-    return 'ES'
-  }
-  if (lang.startsWith('PT')) {
-    return 'PT'
-  }
-  if (lang.startsWith('PT')) {
-    return 'PT'
-  }
-  if (lang.startsWith('IT')) {
-    return 'IT'
-  }
-  if (lang.startsWith('NL')) {
-    return 'NL'
-  }
-  if (lang.startsWith('PL')) {
-    return 'PL'
-  }
-  if (lang.startsWith('RU')) {
-    return 'RU'
-  }
-
-  return undefined
 }
 
 const initApp = () => {

@@ -11,6 +11,7 @@ import ArrowRight from '../../../components/svg/ArrowRight'
 import ClipboardCopy from '../../../components/svg/ClipboardCopy'
 import client from '../common/client'
 import { TranslateJob } from '../common/types'
+import { cleanText } from '../common/utils'
 import { useConfig } from '../providers/config'
 
 const TranslationItem: React.FC<{
@@ -60,7 +61,7 @@ const TranslationItem: React.FC<{
     const res = client.send(
       'translate',
       {
-        text: job.text,
+        text: cleanText(job.text),
         id: job.id,
         targetLang: config.targetLang,
       },
@@ -74,8 +75,13 @@ const TranslationItem: React.FC<{
           payload,
         })
 
-        setResult(payload.translations.map((item) => item.text))
+        const result: string[] = []
 
+        payload.translations.forEach((item) => {
+          result.push(...item.text.split('\n'))
+        })
+
+        setResult(result)
         setLoading(false)
       })
       .catch((err) => {

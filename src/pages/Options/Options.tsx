@@ -104,7 +104,7 @@ const Options: React.FC = () => {
                 <option value="FR">French</option>
                 <option value="ES">Spanish</option>
                 <option value="PT-PT">Portuguese</option>
-                <option value="PT-BR">Portuguese(Brazilian)</option>
+                <option value="PT-BR">Portuguese (Brazilian)</option>
                 <option value="IT">Italian</option>
                 <option value="NL">Dutch</option>
                 <option value="PL">Polish</option>

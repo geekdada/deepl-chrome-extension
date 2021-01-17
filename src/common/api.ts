@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'query-string'
 
 import { APIRegions, TranslateResult } from './types'
 
@@ -26,13 +27,24 @@ class Client {
   }
 
   async translate(text: string, targetLang: string): Promise<TranslateResult> {
-    const form = new FormData()
-
-    form.append('auth_key', this.apiToken)
-    form.append('target_lang', targetLang)
-    form.append('text', text)
-
-    return this.axios.post('/v2/translate', form).then((res) => res.data)
+    return this.axios
+      .post(
+        '/v2/translate',
+        qs.stringify({
+          auth_key: this.apiToken,
+          target_lang: targetLang,
+          split_sentences: '1',
+          preserve_formatting: '0',
+          text: text,
+        }),
+        {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
+          responseType: 'json',
+        },
+      )
+      .then((res) => res.data)
   }
 
   private getAPI(): string {
