@@ -20,6 +20,7 @@ import { TranslateJobsProvider } from './providers/translate-jobs'
 let isAppAttached = false
 let lastSelection: TextSelection | undefined
 let highlighter: any
+let styleCache: ReturnType<typeof createCache>
 
 const main = async () => {
   const container = document.createElement('div')
@@ -200,11 +201,19 @@ const getTextSelection = (selection: RangySelection): TextSelection => {
   }
 }
 
-const styleCache = createCache({
-  key: 'ate',
-})
-
 const initApp = (): void => {
+  const containerEl = document.querySelector('#ate-container')
+
+  if (!containerEl) {
+    return
+  }
+
+  if (!styleCache) {
+    styleCache = createCache({
+      key: 'ate',
+    })
+  }
+
   if (isAppAttached) {
     window.__ate_setClose && window.__ate_setClose(false)
   } else {
@@ -214,7 +223,7 @@ const initApp = (): void => {
           <App />
         </TranslateJobsProvider>
       </CacheProvider>,
-      document.querySelector('#ate-container'),
+      containerEl,
     )
     isAppAttached = true
   }
