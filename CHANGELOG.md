@@ -1,3 +1,13 @@
+# [0.2.0-2](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-1...v0.2.0-2) (2021-01-18)
+
+
+### Bug Fixes
+
+* conflict with emotion 10 application ([699948e](https://github.com/geekdada/a-translator-chrome-extension/commit/699948e1c1f93f43b4e939b4b4652213d1973423))
+* style typo ([4e46590](https://github.com/geekdada/a-translator-chrome-extension/commit/4e4659034f871b25ed7a64d24147eec04c542b6e))
+
+
+
 # [0.2.0-1](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-0...v0.2.0-1) (2021-01-18)
 
 
