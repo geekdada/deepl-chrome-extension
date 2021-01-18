@@ -3,6 +3,7 @@ import Clipboard from 'react-clipboard.js'
 import { useSnackbar } from 'notistack'
 import { Collapse } from 'react-collapse'
 import scrollParent from 'scrollparent'
+import tw, { css } from 'twin.macro'
 
 import logger from '../../../common/logger'
 import { TranslateResult } from '../../../common/types'
@@ -96,10 +97,22 @@ const TranslationItem: React.FC<{
   }, [job, config])
 
   return (
-    <div className="ate_TranslationItem">
-      <div className="ate_TranslationItem__upper">
+    <div tw="p-3 text-gray-800 space-y-3 select-text">
+      <div tw="space-y-3">
         <div
-          className="ate_TranslationItem__original"
+          tw="bg-gray-50 hover:bg-gray-100 p-3 rounded cursor-pointer leading-normal"
+          css={css`
+            .ReactCollapse--collapse {
+              min-height: 48px;
+              will-change: height;
+              transition-property: height;
+
+              ${tw`ease-in-out duration-300`};
+            }
+            .ReactCollapse--content {
+              ${tw`space-y-2`};
+            }
+          `}
           onClick={() => setCollapse((prev) => !prev)}>
           <Collapse isOpened={!collapse}>
             <>
@@ -111,20 +124,30 @@ const TranslationItem: React.FC<{
         </div>
 
         {loading ? (
-          <div className="ate_TranslationItem__result">翻译中…</div>
+          <div tw="rounded bg-yellow-50 p-3 space-y-2 leading-normal">
+            翻译中…
+          </div>
         ) : undefined}
         {result ? (
-          <div className="ate_TranslationItem__result">
+          <div tw="rounded bg-yellow-50 p-3 space-y-2 leading-normal">
             {result.map((item, index) => (
               <div key={index}>{item}</div>
             ))}
           </div>
         ) : undefined}
       </div>
-      <div className="ate_TranslationItem__lower">
+      <div
+        css={[
+          tw`flex justify-between items-center`,
+          css`
+            & > div {
+              ${tw`space-x-2`}
+            }
+          `,
+        ]}>
         <div>
           {job.sourceLang && (
-            <div className="ate_TranslationItem__source-lang-tag">
+            <div tw="px-2 py-1 bg-green-50 text-green-600 text-sm rounded">
               {job.sourceLang}
             </div>
           )}
@@ -136,12 +159,12 @@ const TranslationItem: React.FC<{
               button-title="复制翻译结果"
               onSuccess={() => enqueueSnackbar('复制成功')}
               component={IconButton}
-              className="ate_TranslationItem__copy-button">
+              tw="p-1">
               <ClipboardCopy />
             </Clipboard>
           ) : undefined}
           <IconButton
-            className="ate_TranslationItem__jump-button"
+            tw="p-1"
             onClick={() => findOriginal()}
             title="跳转到原文">
             <ArrowRight />

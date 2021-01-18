@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   Ref,
 } from 'react'
-import clsx from 'clsx'
+import tw from 'twin.macro'
 
 export interface BaseProps {
   children: ReactNode
@@ -26,8 +26,13 @@ const IconButton = forwardRef(function IconButton(
     <button
       {...props}
       ref={ref}
-      className={clsx(['ate_IconButton', props.className])}
-      onClick={handleClick}>
+      onClick={handleClick}
+      css={tw`
+        inline-flex justify-center items-center w-auto h-auto m-0 p-2
+        cursor-pointer text-center no-underline rounded-md
+        border border-solid border-gray-800 bg-white hover:bg-gray-100 active:bg-gray-200
+        transition-colors ease-in-out duration-150
+      `}>
       {props.children}
     </button>
   )

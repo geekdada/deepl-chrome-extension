@@ -1,7 +1,12 @@
+import './common/polyfill'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { v4 as uuid } from 'uuid'
-import smoothScrollPolyfill from 'smoothscroll-polyfill'
+import createCache from '@emotion/cache'
+import { CacheProvider } from '@emotion/react'
+
+import './styles/index.scss'
 
 import logger from '../../common/logger'
 import rangy from '../../common/rangy'
@@ -10,7 +15,6 @@ import translationStack from './common/translation-stack'
 import { TextSelection, TranslateJob } from './common/types'
 import { getDocumentLang, getFirstRange } from './common/utils'
 import App from './components/App'
-import './styles/index.scss'
 import { TranslateJobsProvider } from './providers/translate-jobs'
 
 let isAppAttached = false
@@ -56,10 +60,6 @@ const main = async () => {
       })
     }
   })
-
-  if (!('scrollBehavior' in document.documentElement.style)) {
-    smoothScrollPolyfill.polyfill()
-  }
 }
 
 const onMouseUp = (e: MouseEvent) => {
@@ -200,14 +200,20 @@ const getTextSelection = (selection: RangySelection): TextSelection => {
   }
 }
 
-const initApp = () => {
+const styleCache = createCache({
+  key: 'ate',
+})
+
+const initApp = (): void => {
   if (isAppAttached) {
     window.__ate_setClose && window.__ate_setClose(false)
   } else {
     render(
-      <TranslateJobsProvider>
-        <App />
-      </TranslateJobsProvider>,
+      <CacheProvider value={styleCache}>
+        <TranslateJobsProvider>
+          <App />
+        </TranslateJobsProvider>
+      </CacheProvider>,
       document.querySelector('#ate-container'),
     )
     isAppAttached = true

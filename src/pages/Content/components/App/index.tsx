@@ -1,5 +1,6 @@
-import clsx from 'clsx'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import tw, { css } from 'twin.macro'
+import { ClassNames } from '@emotion/react'
+import React, { useRef, useCallback, useEffect, useMemo, useState } from 'react'
 import Draggable, { DraggableEventHandler } from 'react-draggable'
 import cc from 'chrome-call'
 // @ts-ignore
@@ -19,6 +20,8 @@ import TranslationList from '../TranslationList'
 const App: React.FC = () => {
   const [config, setConfig] = useState<ConfigState>()
   const [close, setClose] = useState(false)
+  const appRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
   const dispatch = useTranslateJobsDispatch()
 
   const appPosition = useMemo(() => {
@@ -53,9 +56,7 @@ const App: React.FC = () => {
   const onDragStart: DraggableEventHandler = (e) => {
     if (
       e.target instanceof Element &&
-      document
-        .querySelector<HTMLButtonElement>('.ate_App__close-button')
-        ?.contains(e.target)
+      closeButtonRef.current?.contains(e.target)
     ) {
       return false
     }
@@ -81,30 +82,61 @@ const App: React.FC = () => {
 
   return (
     <ConfigContext.Provider value={config}>
-      <Draggable
-        handle=".ate_App__header"
-        onStart={onDragStart}
-        defaultPosition={appPosition}>
-        <div className={clsx(['ate_App', close && 'ate_App--inactive'])}>
-          <SnackbarProvider
-            maxSnack={3}
-            domRoot={document.querySelector('.ate_App') as HTMLDivElement}>
-            <div className="ate_App__header">
-              <span>A Translator</span>
-              <span>
-                <IconButton
-                  className="ate_App__close-button"
-                  onClick={() => setClose(true)}>
-                  <CloseIcon />
-                </IconButton>
-              </span>
+      <ClassNames>
+        {({ css, cx }) => (
+          <Draggable
+            handle=".ate_App__header"
+            onStart={onDragStart}
+            defaultPosition={appPosition}>
+            <div
+              ref={appRef}
+              className={cx(
+                'ate_App',
+                css`
+                  position: absolute;
+                  width: 450px;
+                  height: 600px;
+                  z-index: 1;
+                  will-change: transform;
+
+                  ${tw`bg-white shadow-md rounded-lg overflow-hidden flex flex-col`}
+                `,
+                close &&
+                  css`
+                    display: none;
+                  `,
+              )}>
+              <SnackbarProvider
+                maxSnack={3}
+                domRoot={appRef.current || undefined}>
+                <div
+                  className="ate_App__header"
+                  tw="bg-purple-800 px-5 py-3 text-white font-bold text-lg cursor-move flex justify-between items-center">
+                  <span>A Translator</span>
+                  <span>
+                    <IconButton
+                      ref={closeButtonRef}
+                      css={[
+                        tw`p-1`,
+                        css`
+                          svg {
+                            @apply text-gray-800;
+                          }
+                        `,
+                      ]}
+                      onClick={() => setClose(true)}>
+                      <CloseIcon />
+                    </IconButton>
+                  </span>
+                </div>
+                <ScrollToBottom tw="flex-1 overflow-auto" debug={false}>
+                  <TranslationList />
+                </ScrollToBottom>
+              </SnackbarProvider>
             </div>
-            <ScrollToBottom className="ate_App__container" debug={false}>
-              <TranslationList />
-            </ScrollToBottom>
-          </SnackbarProvider>
-        </div>
-      </Draggable>
+          </Draggable>
+        )}
+      </ClassNames>
     </ConfigContext.Provider>
   )
 }

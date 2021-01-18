@@ -4,30 +4,25 @@
       "@babel/preset-env",
       {
         "useBuiltIns": "entry",
-        "corejs": 3
+        "corejs": "3.8.2"
       }
     ],
     "@babel/preset-typescript",
-    "react-app"
+    [
+      "@babel/preset-react",
+      { "runtime": "automatic", "importSource": "@emotion/react" }
+    ]
   ],
   "plugins": [
+    "@babel/plugin-proposal-class-properties",
     "babel-plugin-transform-inline-environment-variables",
     "babel-plugin-macros",
-    [
-      "@emotion/babel-plugin-jsx-pragmatic",
-      {
-        "export": "jsx",
-        "import": "__cssprop",
-        "module": "@emotion/react"
-      }
-    ],
-    [
-      "@babel/plugin-transform-react-jsx",
-      {
-        "pragma": "__cssprop",
-        "pragmaFrag": "React.Fragment"
-      }
-    ],
+    ["@emotion/babel-plugin", {
+      "sourceMap": true,
+      "autoLabel": "dev-only",
+      "labelFormat": "[local]",
+      "cssPropOptimization": true
+    }],
     "react-hot-loader/babel"
   ]
 }
