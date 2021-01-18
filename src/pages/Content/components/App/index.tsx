@@ -83,7 +83,7 @@ const App: React.FC = () => {
   return (
     <ConfigContext.Provider value={config}>
       <ClassNames>
-        {({ css, cx }) => (
+        {({ css: _css, cx }) => (
           <Draggable
             handle=".ate_App__header"
             onStart={onDragStart}
@@ -92,7 +92,7 @@ const App: React.FC = () => {
               ref={appRef}
               className={cx(
                 'ate_App',
-                css`
+                _css`
                   position: absolute;
                   width: 450px;
                   height: 600px;
@@ -102,7 +102,7 @@ const App: React.FC = () => {
                   ${tw`bg-white shadow-md rounded-lg overflow-hidden flex flex-col`}
                 `,
                 close &&
-                  css`
+                  _css`
                     display: none;
                   `,
               )}>
@@ -120,7 +120,7 @@ const App: React.FC = () => {
                         tw`p-1`,
                         css`
                           svg {
-                            @apply text-gray-800;
+                            ${tw`text-gray-800`};
                           }
                         `,
                       ]}
