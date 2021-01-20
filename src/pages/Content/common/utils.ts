@@ -1,10 +1,10 @@
-import { SupportLanguages } from '../../../common/types'
+import { SupportLanguageKeys } from '../../../common/types'
 
 export const getFirstRange = (sel: RangySelection): RangyRange | undefined => {
   return sel.rangeCount ? sel.getRangeAt(0) : undefined
 }
 
-export const getDocumentLang = (): SupportLanguages | undefined => {
+export const getDocumentLang = (): SupportLanguageKeys | undefined => {
   const html = document.querySelector('html')
 
   if (!html) return

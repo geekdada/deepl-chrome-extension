@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from 'react'
 
-import { SupportLanguages } from '../../../common/types'
+import { SupportLanguageKeys } from '../../../common/types'
 
 export type ConfigState = {
-  targetLang: SupportLanguages
+  targetLang: SupportLanguageKeys
 }
 
 export const ConfigContext = createContext<ConfigState | undefined>(undefined)

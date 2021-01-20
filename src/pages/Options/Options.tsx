@@ -9,7 +9,8 @@ import { Global } from '@emotion/react'
 import cc from 'chrome-call'
 
 import Client from '../../common/api'
-import { APIRegions, Config } from '../../common/types'
+import { supportedLanguages } from '../../common/constant'
+import { APIRegions, Config, SupportLanguageKeys } from '../../common/types'
 
 import OptionSection from './components/OptionSection'
 
@@ -96,19 +97,11 @@ const Options: React.FC = () => {
                 name="target-lang"
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value)}>
-                <option value="ZH">中文</option>
-                <option value="EN-US">English (American)</option>
-                <option value="EN-GB">English (British)</option>
-                <option value="JA">日本語</option>
-                <option value="DE">German</option>
-                <option value="FR">French</option>
-                <option value="ES">Spanish</option>
-                <option value="PT-PT">Portuguese</option>
-                <option value="PT-BR">Portuguese (Brazilian)</option>
-                <option value="IT">Italian</option>
-                <option value="NL">Dutch</option>
-                <option value="PL">Polish</option>
-                <option value="RU">Russian</option>
+                {Object.keys(supportedLanguages).map((lang, index) => (
+                  <option value={lang} key={index}>
+                    {supportedLanguages[lang as SupportLanguageKeys]}
+                  </option>
+                ))}
               </select>
             </OptionSection>
 

@@ -4,9 +4,10 @@ import { useSnackbar } from 'notistack'
 import { Collapse } from 'react-collapse'
 import scrollParent from 'scrollparent'
 import tw, { css } from 'twin.macro'
+import { supportedLanguages } from '../../../../common/constant'
 
 import logger from '../../../../common/logger'
-import { TranslateResult } from '../../../../common/types'
+import { SupportLanguageKeys, TranslateResult } from '../../../../common/types'
 import IconButton from '../../../../components/IconButton'
 import ArrowRight from '../../../../components/svg/ArrowRight'
 import ClipboardCopy from '../../../../components/svg/ClipboardCopy'
@@ -23,6 +24,7 @@ const TranslationItem: React.FC<{
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string>()
   const [result, setResult] = useState<string[]>()
+  const [overrideLang, setOverrideLang] = useState<string>()
   const [dirty, setDirty] = useState(0)
   const [collapse, setCollapse] = useState(true)
   const { enqueueSnackbar } = useSnackbar()
@@ -66,12 +68,16 @@ const TranslationItem: React.FC<{
   useEffect(() => {
     if (!config) return
 
+    setResult(undefined)
+    setLoading(true)
+    setError(undefined)
+
     const res = client.send(
       'translate',
       {
         text: cleanText(job.text),
         id: job.id,
-        targetLang: config.targetLang,
+        targetLang: overrideLang || config.targetLang,
       },
       true,
     ) as Promise<TranslateResult>
@@ -89,6 +95,7 @@ const TranslationItem: React.FC<{
           result.push(...item.text.split('\n'))
         })
 
+        setError(undefined)
         setResult(result)
         setLoading(false)
       })
@@ -102,7 +109,7 @@ const TranslationItem: React.FC<{
         setLoading(false)
         enqueueSnackbar(`翻译失败：${err.message}`, { variant: 'error' })
       })
-  }, [job, config, enqueueSnackbar, dirty])
+  }, [job, config, enqueueSnackbar, dirty, overrideLang])
 
   return (
     <div tw="p-3 text-gray-800 space-y-3 select-text">
@@ -131,19 +138,19 @@ const TranslationItem: React.FC<{
           </Collapse>
         </div>
 
-        {loading ? (
-          <div tw="rounded bg-yellow-50 p-3 space-y-2 leading-normal">
-            翻译中…
-          </div>
-        ) : undefined}
+        <div tw="rounded bg-yellow-50 p-3 space-y-2 leading-normal">
+          {error ? <span>{error}</span> : undefined}
 
-        {result ? (
-          <div tw="rounded bg-yellow-50 p-3 space-y-2 leading-normal">
-            {result.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))}
-          </div>
-        ) : undefined}
+          {loading ? <span>{'翻译中…'}</span> : undefined}
+
+          {result ? (
+            <>
+              {result.map((item, index) => (
+                <div key={index}>{item}</div>
+              ))}
+            </>
+          ) : undefined}
+        </div>
       </div>
       <div
         css={[
@@ -154,12 +161,34 @@ const TranslationItem: React.FC<{
             }
           `,
         ]}>
-        <div>
+        <div
+          tw="flex items-center space-x-3"
+          css={css`
+            height: 35px;
+          `}>
           {job.sourceLang && (
-            <div tw="px-2 py-1 bg-green-50 text-green-600 text-sm rounded">
+            <div tw="px-3 py-0 h-full flex items-center bg-green-50 text-green-600 text-sm rounded">
               {job.sourceLang}
             </div>
           )}
+          <div tw="h-full">
+            {config ? (
+              <select
+                tw="px-2 py-0 h-full rounded-md truncate border-none bg-blue-50 text-gray-800"
+                css={css`
+                  width: 100px;
+                `}
+                name="target-lang"
+                value={overrideLang || config.targetLang}
+                onChange={(e) => setOverrideLang(e.target.value)}>
+                {Object.keys(supportedLanguages).map((lang, index) => (
+                  <option value={lang} key={index}>
+                    {supportedLanguages[lang as SupportLanguageKeys]}
+                  </option>
+                ))}
+              </select>
+            ) : undefined}
+          </div>
         </div>
         <div>
           {result ? (
