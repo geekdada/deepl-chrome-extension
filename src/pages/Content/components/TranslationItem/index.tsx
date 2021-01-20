@@ -5,22 +5,25 @@ import { Collapse } from 'react-collapse'
 import scrollParent from 'scrollparent'
 import tw, { css } from 'twin.macro'
 
-import logger from '../../../common/logger'
-import { TranslateResult } from '../../../common/types'
-import IconButton from '../../../components/IconButton'
-import ArrowRight from '../../../components/svg/ArrowRight'
-import ClipboardCopy from '../../../components/svg/ClipboardCopy'
-import client from '../common/client'
-import { TranslateJob } from '../common/types'
-import { cleanText } from '../common/utils'
-import { useConfig } from '../providers/config'
+import logger from '../../../../common/logger'
+import { TranslateResult } from '../../../../common/types'
+import IconButton from '../../../../components/IconButton'
+import ArrowRight from '../../../../components/svg/ArrowRight'
+import ClipboardCopy from '../../../../components/svg/ClipboardCopy'
+import Refresh from '../../../../components/svg/Refresh'
+import client from '../../common/client'
+import { TranslateJob } from '../../common/types'
+import { cleanText } from '../../common/utils'
+import { useConfig } from '../../providers/config'
 
 const TranslationItem: React.FC<{
   job: TranslateJob
 }> = ({ job }) => {
   const config = useConfig()
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string>()
   const [result, setResult] = useState<string[]>()
+  const [dirty, setDirty] = useState(0)
   const [collapse, setCollapse] = useState(true)
   const { enqueueSnackbar } = useSnackbar()
 
@@ -56,6 +59,10 @@ const TranslationItem: React.FC<{
     }
   }
 
+  const refreshResult = () => {
+    setDirty((val) => val + 1)
+  }
+
   useEffect(() => {
     if (!config) return
 
@@ -85,16 +92,17 @@ const TranslationItem: React.FC<{
         setResult(result)
         setLoading(false)
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         logger.error({
           msg: 'translate failed',
           data: err,
         })
 
+        setError(err.message)
         setLoading(false)
         enqueueSnackbar(`翻译失败：${err.message}`, { variant: 'error' })
       })
-  }, [job, config])
+  }, [job, config, enqueueSnackbar, dirty])
 
   return (
     <div tw="p-3 text-gray-800 space-y-3 select-text">
@@ -128,6 +136,7 @@ const TranslationItem: React.FC<{
             翻译中…
           </div>
         ) : undefined}
+
         {result ? (
           <div tw="rounded bg-yellow-50 p-3 space-y-2 leading-normal">
             {result.map((item, index) => (
@@ -163,6 +172,16 @@ const TranslationItem: React.FC<{
               <ClipboardCopy />
             </Clipboard>
           ) : undefined}
+
+          {!loading && error ? (
+            <IconButton
+              tw="p-1 border-red-500 bg-red-100 text-red-500 hover:bg-red-200"
+              onClick={() => refreshResult()}
+              title="重试">
+              <Refresh />
+            </IconButton>
+          ) : undefined}
+
           <IconButton
             tw="p-1"
             onClick={() => findOriginal()}
