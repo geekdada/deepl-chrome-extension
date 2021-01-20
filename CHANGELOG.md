@@ -1,3 +1,13 @@
+# [0.2.0-3](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-2...v0.2.0-3) (2021-01-20)
+
+
+### Features
+
+* change target language directly in webpage ([fdb574b](https://github.com/geekdada/a-translator-chrome-extension/commit/fdb574b8210ce6914f64f2a8cfecdde13cdf7ad6))
+* retry button ([2b287d3](https://github.com/geekdada/a-translator-chrome-extension/commit/2b287d3fec67c01f25a8a8d7b57c3c0e02962b29))
+
+
+
 # [0.2.0-2](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-1...v0.2.0-2) (2021-01-18)
 
 
