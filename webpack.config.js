@@ -96,7 +96,9 @@ const options = {
     extensions: fileExtensions
       .map((extension) => '.' + extension)
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
-    fallback: {},
+    fallback: {
+      crypto: false,
+    },
   },
   plugins: [
     new webpack.ProgressPlugin(),
