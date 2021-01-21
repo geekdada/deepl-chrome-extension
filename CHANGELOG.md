@@ -1,3 +1,13 @@
+# [0.2.0-4](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-3...v0.2.0-4) (2021-01-21)
+
+
+### Features
+
+* ocr text for translating ([72b58ed](https://github.com/geekdada/a-translator-chrome-extension/commit/72b58ede93a68032d2b4979e46ae32f35803a9ea))
+* turn off ocr tool when the selection is too small ([0e13070](https://github.com/geekdada/a-translator-chrome-extension/commit/0e130708c7c87d1e3e6929509e65abbccff3db8b))
+
+
+
 # [0.2.0-3](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-2...v0.2.0-3) (2021-01-20)
 
 
