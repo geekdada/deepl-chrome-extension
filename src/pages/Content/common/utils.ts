@@ -19,10 +19,7 @@ export const getDocumentLang = (): SupportLanguageKeys | undefined => {
     return 'ZH'
   }
   if (lang.startsWith('EN')) {
-    return 'EN'
-  }
-  if (lang.startsWith('EN')) {
-    return 'EN'
+    return 'EN-US'
   }
   if (lang.startsWith('JA')) {
     return 'JA'
@@ -37,10 +34,7 @@ export const getDocumentLang = (): SupportLanguageKeys | undefined => {
     return 'ES'
   }
   if (lang.startsWith('PT')) {
-    return 'PT'
-  }
-  if (lang.startsWith('PT')) {
-    return 'PT'
+    return 'PT-PT'
   }
   if (lang.startsWith('IT')) {
     return 'IT'

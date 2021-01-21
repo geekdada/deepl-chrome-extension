@@ -4,6 +4,8 @@ export interface Config {
   token: string
   targetLang: SupportLanguageKeys
   region: APIRegions
+  ocrSecretId?: string
+  ocrSecretKey?: string
 }
 
 export type SupportLanguageKeys = keyof typeof supportedLanguages

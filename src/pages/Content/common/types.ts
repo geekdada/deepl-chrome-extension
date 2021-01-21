@@ -11,7 +11,7 @@ export interface TextSelection {
 
 export interface TranslateJob {
   id: string
-  anchorId: string
   text: string
-  sourceLang?: SupportLanguageKeys
+  anchorId?: string
+  sourceLang?: string
 }

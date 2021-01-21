@@ -32,3 +32,25 @@ declare module 'rangy' {
 
   export = rangy
 }
+
+declare module 'react-resizable' {
+  import { Axis, ResizeCallbackData, ResizeHandle } from 'react-resizable'
+
+  export interface ResizableProps {
+    className?: string
+    width: number
+    height: number
+    handle?: React.ReactNode | ((resizeHandle: ResizeHandle) => React.ReactNode)
+    handleSize?: [number, number]
+    lockAspectRatio?: boolean
+    axis?: Axis
+    minConstraints?: [number, number]
+    maxConstraints?: [number, number]
+    onResizeStop?: (e: React.SyntheticEvent, data: ResizeCallbackData) => any
+    onResizeStart?: (e: React.SyntheticEvent, data: ResizeCallbackData) => any
+    onResize?: (e: React.SyntheticEvent, data: ResizeCallbackData) => any
+    draggableOpts?: any
+    resizeHandles?: ResizeHandle[]
+    style?: Record<string, any>
+  }
+}

@@ -5,6 +5,7 @@ import { render } from 'react-dom'
 import { v4 as uuid } from 'uuid'
 import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
+import { SnackbarProvider } from 'notistack'
 
 import './styles/index.scss'
 
@@ -220,7 +221,9 @@ const initApp = (): void => {
     render(
       <CacheProvider value={styleCache}>
         <TranslateJobsProvider>
-          <App />
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
         </TranslateJobsProvider>
       </CacheProvider>,
       containerEl,

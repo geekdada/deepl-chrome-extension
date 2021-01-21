@@ -211,12 +211,14 @@ const TranslationItem: React.FC<{
             </IconButton>
           ) : undefined}
 
-          <IconButton
-            tw="p-1"
-            onClick={() => findOriginal()}
-            title="跳转到原文">
-            <ArrowRight />
-          </IconButton>
+          {job.anchorId ? (
+            <IconButton
+              tw="p-1"
+              onClick={() => findOriginal()}
+              title="跳转到原文">
+              <ArrowRight />
+            </IconButton>
+          ) : undefined}
         </div>
       </div>
     </div>

@@ -4,6 +4,8 @@ import { SupportLanguageKeys } from '../../../common/types'
 
 export type ConfigState = {
   targetLang: SupportLanguageKeys
+  ocrSecretId?: string
+  ocrSecretKey?: string
 }
 
 export const ConfigContext = createContext<ConfigState | undefined>(undefined)

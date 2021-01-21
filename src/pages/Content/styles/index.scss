@@ -49,3 +49,12 @@
 .ate-highlight {
     @apply bg-purple-200 text-gray-800;
 }
+
+@keyframes ate-animation-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
