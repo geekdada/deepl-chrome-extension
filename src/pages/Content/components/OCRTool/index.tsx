@@ -72,15 +72,19 @@ const OCRTool: React.FC<{
         const vw = window.top.innerWidth || window.innerWidth || 0
         const vh = window.top.innerHeight || window.innerHeight || 0
 
-        props.onFinish({
-          x: axisX,
-          y: axisY,
-          width: w,
-          height: h,
-          clientWidth: vw,
-          clientHeight: vh,
-          clientPixelRatio: window.devicePixelRatio,
-        })
+        if (w < 5 || h < 5) {
+          props.onFinish()
+        } else {
+          props.onFinish({
+            x: axisX,
+            y: axisY,
+            width: w,
+            height: h,
+            clientWidth: vw,
+            clientHeight: vh,
+            clientPixelRatio: window.devicePixelRatio,
+          })
+        }
       }
       setOverlayActive(false)
     }
