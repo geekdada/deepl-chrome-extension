@@ -6,6 +6,7 @@ export interface Config {
   region: APIRegions
   ocrSecretId?: string
   ocrSecretKey?: string
+  hoverButton?: boolean
 }
 
 export type SupportLanguageKeys = keyof typeof supportedLanguages

@@ -1,4 +1,5 @@
 import './common/polyfill'
+import cc from 'chrome-call'
 
 import React from 'react'
 import { render } from 'react-dom'
@@ -11,6 +12,7 @@ import './styles/index.scss'
 
 import logger from '../../common/logger'
 import rangy from '../../common/rangy'
+import { Config } from '../../common/types'
 import server from './common/server'
 import translationStack from './common/translation-stack'
 import { TextSelection, TranslateJob } from './common/types'
@@ -52,10 +54,18 @@ const main = async () => {
       document.querySelector<HTMLBodyElement>('body')?.append(iconContainer)
       document.querySelector<HTMLBodyElement>('body')?.append(container)
 
-      attachListeners()
+      cc(chrome.storage.sync, 'get').then((config: Partial<Config>) => {
+        const hoverButton =
+          config.hoverButton === undefined || config.hoverButton
 
-      // TODO: remove before deploying
-      // initApp()
+        if (hoverButton) {
+          document.querySelector<HTMLBodyElement>('body')?.append(iconContainer)
+        }
+
+        attachListeners({
+          hoverButton,
+        })
+      })
     } catch (err) {
       logger.error({
         err,
@@ -156,8 +166,10 @@ const addTranslateJob = (job: TranslateJob) => {
   translationStack.push(job)
 }
 
-const attachListeners = () => {
-  document.addEventListener('mouseup', onMouseUp, false)
+const attachListeners = (config: { hoverButton: boolean }) => {
+  if (config.hoverButton) {
+    document.addEventListener('mouseup', onMouseUp, false)
+  }
 
   server.on('connect', (client) => {
     client.on('open_extension', () => {

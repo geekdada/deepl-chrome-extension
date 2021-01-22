@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import tw, { css } from 'twin.macro'
+import tw, { css, styled } from 'twin.macro'
 import { Global } from '@emotion/react'
 import cc from 'chrome-call'
 
@@ -13,12 +13,17 @@ import { supportedLanguages } from '../../common/constant'
 import { APIRegions, Config, SupportLanguageKeys } from '../../common/types'
 import OptionSection from './components/OptionSection'
 
+const InputGroup = styled('div')`
+  ${tw`flex space-x-3 items-center`}
+`
+
 const Options: React.FC = () => {
   const [targetLang, setTargetLang] = useState('ZH')
   const [token, setToken] = useState('')
   const [region, setRegion] = useState<APIRegions>('default')
   const [ocrSecretId, setOCRSecretId] = useState('')
   const [ocrSecretKey, setOCRSecretKey] = useState('')
+  const [hoverButton, setHoverButton] = useState(true)
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault()
@@ -29,6 +34,7 @@ const Options: React.FC = () => {
         region,
         ocrSecretId,
         ocrSecretKey,
+        hoverButton,
       })
 
       window.alert('保存成功')
@@ -63,6 +69,7 @@ const Options: React.FC = () => {
       if (config.ocrSecretId !== undefined) setOCRSecretId(config.ocrSecretId)
       if (config.ocrSecretKey !== undefined)
         setOCRSecretKey(config.ocrSecretKey)
+      if (config.hoverButton !== undefined) setHoverButton(config.hoverButton)
     })
   }, [])
 
@@ -163,6 +170,18 @@ const Options: React.FC = () => {
                   可不填，填入后可使用 OCR 识别文字翻译。
                 </div>
               </div>
+            </OptionSection>
+
+            <OptionSection title={'其它设置'}>
+              <InputGroup>
+                <input
+                  type="checkbox"
+                  id="hover-button"
+                  checked={hoverButton}
+                  onChange={(e) => setHoverButton(e.target.checked)}
+                />
+                <label htmlFor="hover-button">开启网页悬浮按钮</label>
+              </InputGroup>
             </OptionSection>
 
             <OptionSection title={'🔗 相关链接'}>
