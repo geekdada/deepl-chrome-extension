@@ -75,7 +75,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.create({
   id: 'ate-open_application',
   parentId: 'ate',
-  title: 'Open application',
+  title: '打开应用',
   onclick() {
     openExtension()
   },
@@ -84,7 +84,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.create({
   id: 'ate-toggle_ocr',
   parentId: 'ate',
-  title: 'Toggle OCR',
+  title: '开启 OCR 识别',
   onclick() {
     toggleOCR()
   },
@@ -93,7 +93,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.create({
   id: 'ate-translate_selection',
   contexts: ['selection'],
-  title: 'Translate selection',
+  title: '翻译选中文字',
   onclick(payload) {
     if (payload.selectionText) {
       translateText(payload.selectionText)

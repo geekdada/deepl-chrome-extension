@@ -39,14 +39,14 @@
   ],
   "commands": {
     "open_application": {
-      "description": "Open application",
+      "description": "打开应用",
       "suggested_key": {
         "default": "Ctrl+Shift+W",
         "mac": "MacCtrl+Command+W"
       }
     },
     "toggle_ocr": {
-      "description": "Toggle OCR",
+      "description": "开启 OCR 识别",
       "suggested_key": {
         "default": "Ctrl+Shift+E",
         "mac": "MacCtrl+Command+E"
