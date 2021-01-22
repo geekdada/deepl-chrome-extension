@@ -97,6 +97,7 @@ const onMouseUp = (e: MouseEvent) => {
       highlightSelection(lastSelection.selection)
 
       addTranslateJob({
+        type: 'translate',
         anchorId,
         id,
         text: lastSelection.text,
@@ -161,6 +162,24 @@ const attachListeners = () => {
   server.on('connect', (client) => {
     client.on('open_extension', () => {
       initApp()
+    })
+
+    client.on('toggle_ocr', () => {
+      if (isAppAttached) {
+        initApp()
+        translationStack.push({
+          type: 'directive',
+          directive: 'toggle_ocr',
+        })
+      } else {
+        initApp()
+        setTimeout(() => {
+          translationStack.push({
+            type: 'directive',
+            directive: 'toggle_ocr',
+          })
+        }, 50)
+      }
     })
   })
 }

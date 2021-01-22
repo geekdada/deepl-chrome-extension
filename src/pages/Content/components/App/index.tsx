@@ -15,7 +15,7 @@ import CloseIcon from '../../../../components/svg/Close'
 import CursorClick from '../../../../components/svg/CursorClick'
 import LoadingCircle from '../../../../components/svg/LoadingCircle'
 import translationStack from '../../common/translation-stack'
-import { TranslateJob } from '../../common/types'
+import { AllJobTypes, DirectiveJob } from '../../common/types'
 import { ConfigContext, ConfigState } from '../../providers/config'
 import { useTranslateJobsDispatch } from '../../providers/translate-jobs'
 import OCRTool, { OnFinish } from '../OCRTool'
@@ -48,22 +48,46 @@ const App: React.FC = () => {
   }, [])
 
   const onNewJob = useCallback(
-    (job: TranslateJob) => {
+    (job: AllJobTypes) => {
       logger.debug({
         msg: 'new job',
         job,
       })
 
-      if (!job.sourceLang) {
-        job.sourceLang = 'EN'
+      const doDirectiveJob = (job: DirectiveJob): void => {
+        switch (job.directive) {
+          case 'toggle_ocr':
+            if (enableOCR) {
+              setShowOCRTool((oldVal) => !oldVal)
+            } else {
+              enqueueSnackbar('无法开启 OCR，请确认已正确设置腾讯云 OCR', {
+                variant: 'warning',
+              })
+            }
+            break
+          default:
+          // no default
+        }
       }
 
-      dispatch({
-        type: 'add',
-        payload: job,
-      })
+      switch (job.type) {
+        case 'translate':
+          if (!job.sourceLang) {
+            job.sourceLang = 'EN'
+          }
+
+          dispatch({
+            type: 'add',
+            payload: job,
+          })
+          break
+
+        case 'directive':
+          doDirectiveJob(job)
+          break
+      }
     },
-    [dispatch],
+    [dispatch, enableOCR, enqueueSnackbar],
   )
 
   const onDragStart: DraggableEventHandler = useCallback((e) => {
@@ -104,6 +128,7 @@ const App: React.FC = () => {
           })
           .then((result: string[]) => {
             translationStack.push({
+              type: 'translate',
               id: uuid(),
               text: result.join('\n'),
             })
@@ -114,7 +139,7 @@ const App: React.FC = () => {
           .finally(() => {
             setLoadingOCR(false)
           })
-      }, 100)
+      }, 50)
     },
     [enqueueSnackbar],
   )
@@ -168,6 +193,7 @@ const App: React.FC = () => {
                 <span tw="flex space-x-3">
                   {enableOCR ? (
                     <IconButton
+                      title="开启 OCR 识别"
                       ref={ocrToolButtonRef}
                       tw="p-1 text-gray-800"
                       onClick={() => !loadingOCR && setShowOCRTool(true)}>
@@ -184,6 +210,7 @@ const App: React.FC = () => {
                   ) : undefined}
 
                   <IconButton
+                    title="关闭"
                     ref={closeButtonRef}
                     tw="p-1 text-gray-800"
                     onClick={() => setClose(true)}>

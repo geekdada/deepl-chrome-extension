@@ -174,7 +174,7 @@ const TranslationItem: React.FC<{
           <div tw="h-full">
             {config ? (
               <select
-                tw="px-2 py-0 h-full rounded-md truncate border-none bg-blue-50 text-gray-800"
+                tw="px-2 py-0 h-full rounded-md truncate border-none bg-blue-50 text-gray-800 text-base text-base"
                 css={css`
                   width: 100px;
                 `}

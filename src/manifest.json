@@ -31,6 +31,22 @@
     "icon-128.png",
     "icon-34.png"
   ],
+  "commands": {
+    "open_application": {
+      "description": "Open application",
+      "suggested_key": {
+        "default": "Ctrl+Shift+W",
+        "mac": "MacCtrl+Command+W"
+      }
+    },
+    "toggle_ocr": {
+      "description": "Toggle OCR",
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "MacCtrl+Command+E"
+      }
+    }
+  },
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

@@ -10,8 +10,17 @@ export interface TextSelection {
 }
 
 export interface TranslateJob {
+  type: 'translate'
   id: string
   text: string
   anchorId?: string
   sourceLang?: string
 }
+
+export interface DirectiveJob {
+  type: 'directive'
+  directive: string
+  payload?: Record<string, any>
+}
+
+export type AllJobTypes = TranslateJob | DirectiveJob

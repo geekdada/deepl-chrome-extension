@@ -1,10 +1,10 @@
-import { TranslateJob } from './types'
+import { AllJobTypes } from './types'
 
 class TranslationStack {
-  stack: Array<TranslateJob> = []
-  onPush?: (job: TranslateJob) => void
+  stack: Array<AllJobTypes> = []
+  onPush?: (job: AllJobTypes) => void
 
-  attachQueue(onPush: (job: TranslateJob) => void) {
+  attachQueue(onPush: (job: AllJobTypes) => void) {
     this.onPush = onPush
 
     while (this.stack.length) {
@@ -17,7 +17,7 @@ class TranslationStack {
     this.onPush = undefined
   }
 
-  push(job: TranslateJob) {
+  push(job: AllJobTypes) {
     if (this.onPush) {
       this.onPush(job)
     } else {

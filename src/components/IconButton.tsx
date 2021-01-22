@@ -29,7 +29,7 @@ const IconButton = forwardRef(function IconButton(
       onClick={handleClick}
       css={tw`
         inline-flex justify-center items-center w-auto h-auto m-0 p-2
-        cursor-pointer text-center no-underline rounded-md
+        cursor-pointer text-center text-gray-800 no-underline rounded-md
         border border-solid border-gray-800 bg-white hover:bg-gray-100 active:bg-gray-200
         transition-colors ease-in-out duration-150
       `}>
