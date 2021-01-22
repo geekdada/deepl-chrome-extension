@@ -7,6 +7,7 @@ import React, {
 import tw, { css, styled } from 'twin.macro'
 import { Global } from '@emotion/react'
 import cc from 'chrome-call'
+import { useSnackbar } from 'notistack'
 
 import Client from '../../common/api'
 import { supportedLanguages } from '../../common/constant'
@@ -24,6 +25,7 @@ const Options: React.FC = () => {
   const [ocrSecretId, setOCRSecretId] = useState('')
   const [ocrSecretKey, setOCRSecretKey] = useState('')
   const [hoverButton, setHoverButton] = useState(true)
+  const { enqueueSnackbar } = useSnackbar()
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault()
@@ -37,7 +39,7 @@ const Options: React.FC = () => {
         hoverButton,
       })
 
-      window.alert('保存成功')
+      enqueueSnackbar('保存成功', { variant: 'success' })
     })()
   }
 
@@ -45,7 +47,7 @@ const Options: React.FC = () => {
     e.preventDefault()
 
     if (!token) {
-      window.alert('请填入 API Token')
+      enqueueSnackbar('请填入 API Token', { variant: 'warning' })
       return
     }
 
@@ -54,10 +56,10 @@ const Options: React.FC = () => {
     client
       .translate('This is a test message.', 'ZH')
       .then(() => {
-        window.alert('测试成功')
+        enqueueSnackbar('测试成功', { variant: 'success' })
       })
       .catch((err) => {
-        window.alert('测试失败：' + err.message)
+        enqueueSnackbar('测试失败：' + err.message, { variant: 'error' })
       })
   }
 
