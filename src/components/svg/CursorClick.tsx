@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { SVGProps } from 'react'
 
-export default function CursorClick(): React.ReactElement {
+const CursorClick: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
+      {...props}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       width="16"
@@ -18,3 +19,5 @@ export default function CursorClick(): React.ReactElement {
     </svg>
   )
 }
+
+export default CursorClick
