@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-5...v0.2.0) (2021-01-22)
+
+
+### Features
+
+* remove window.alert ([1a5048c](https://github.com/geekdada/a-translator-chrome-extension/commit/1a5048c2d45dc321afc0bb9cfec3dd9bf470f675))
+
+
+
 # [0.2.0-5](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-4...v0.2.0-5) (2021-01-22)
 
 

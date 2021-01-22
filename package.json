@@ -1,6 +1,6 @@
 {
   "name": "a-translator-chrome-extension",
-  "version": "0.2.0-5",
+  "version": "0.2.0",
   "description": "A Chrome extension for A Translator",
   "license": "MIT",
   "repository": {
