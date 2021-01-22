@@ -35,6 +35,22 @@ const toggleOCR = (): void => {
     })
 }
 
+const translateText = (text: string): void => {
+  cc(chrome.tabs, 'query', { active: true, currentWindow: true })
+    .then((tabs: chrome.tabs.Tab[]) => {
+      const client = createClient(tabs[0].id)
+
+      client.send('translate_text', {
+        text,
+      })
+    })
+    .catch((err) => {
+      logger.error({
+        err,
+      })
+    })
+}
+
 chrome.browserAction.onClicked.addListener(openExtension)
 
 chrome.commands.onCommand.addListener(function (command) {
@@ -48,4 +64,39 @@ chrome.commands.onCommand.addListener(function (command) {
     default:
     // no default
   }
+})
+
+chrome.contextMenus.create({
+  id: 'ate',
+  title: 'A Translator',
+  contexts: ['page'],
+})
+
+chrome.contextMenus.create({
+  id: 'ate-open_application',
+  parentId: 'ate',
+  title: 'Open application',
+  onclick() {
+    openExtension()
+  },
+})
+
+chrome.contextMenus.create({
+  id: 'ate-toggle_ocr',
+  parentId: 'ate',
+  title: 'Toggle OCR',
+  onclick() {
+    toggleOCR()
+  },
+})
+
+chrome.contextMenus.create({
+  id: 'ate-translate_selection',
+  contexts: ['selection'],
+  title: 'Translate selection',
+  onclick(payload) {
+    if (payload.selectionText) {
+      translateText(payload.selectionText)
+    }
+  },
 })

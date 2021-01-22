@@ -181,6 +181,15 @@ const attachListeners = () => {
         }, 50)
       }
     })
+
+    client.on('translate_text', (payload: { text: string }) => {
+      initApp()
+      translationStack.push({
+        type: 'translate',
+        id: uuid(),
+        text: payload.text,
+      })
+    })
   })
 }
 

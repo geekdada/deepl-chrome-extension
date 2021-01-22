@@ -1,6 +1,12 @@
 {
   "name": "A Translator",
-  "permissions": ["http://*/*", "https://*/*", "storage", "activeTab"],
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
   "options_ui": {
     "page": "options.html",
     "chrome_style": false,
