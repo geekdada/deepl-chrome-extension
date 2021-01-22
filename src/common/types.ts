@@ -1,27 +1,21 @@
+import { supportedLanguages } from './constant'
+
 export interface Config {
   token: string
-  targetLang: SupportLanguages
+  targetLang: SupportLanguageKeys
   region: APIRegions
+  ocrSecretId?: string
+  ocrSecretKey?: string
+  hoverButton?: boolean
 }
 
-export type SupportLanguages =
-  | 'ZH'
-  | 'EN'
-  | 'JA'
-  | 'DE'
-  | 'FR'
-  | 'ES'
-  | 'PT'
-  | 'IT'
-  | 'NL'
-  | 'PL'
-  | 'RU'
+export type SupportLanguageKeys = keyof typeof supportedLanguages
 
 export type APIRegions = 'default' | 'global' | 'dev'
 
 export type TranslateResult = {
   translations: Array<{
-    detected_source_language: SupportLanguages
+    detected_source_language: SupportLanguageKeys
     text: string
   }>
 }

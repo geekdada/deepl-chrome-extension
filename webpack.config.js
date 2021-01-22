@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const semver = require('semver')
 
 const ASSET_PATH = process.env.ASSET_PATH || '/'
 
@@ -95,7 +96,9 @@ const options = {
     extensions: fileExtensions
       .map((extension) => '.' + extension)
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
-    fallback: {},
+    fallback: {
+      crypto: false,
+    },
   },
   plugins: [
     new webpack.ProgressPlugin(),
@@ -124,7 +127,9 @@ const options = {
                 {
                   ...manifest,
                   description: process.env.npm_package_description,
-                  version: process.env.npm_package_version,
+                  version: semver
+                    .coerce(process.env.npm_package_version)
+                    .toString(),
                 },
                 null,
                 2,

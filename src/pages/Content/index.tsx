@@ -1,26 +1,29 @@
+import './common/polyfill'
+import cc from 'chrome-call'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { v4 as uuid } from 'uuid'
-// @ts-ignore
-import smoothScrollPolyfill from 'smoothscroll-polyfill'
-import * as rangy from 'rangy'
-// @ts-ignore
-import 'rangy/lib/rangy-classapplier'
-import 'rangy/lib/rangy-highlighter'
+import createCache from '@emotion/cache'
+import { CacheProvider } from '@emotion/react'
+import { SnackbarProvider } from 'notistack'
+
+import './styles/index.scss'
 
 import logger from '../../common/logger'
-import { SupportLanguages } from '../../common/types'
+import rangy from '../../common/rangy'
+import { Config } from '../../common/types'
 import server from './common/server'
 import translationStack from './common/translation-stack'
 import { TextSelection, TranslateJob } from './common/types'
-import { getFirstRange } from './common/utils'
+import { getDocumentLang, getFirstRange } from './common/utils'
 import App from './components/App'
-import './styles/index.scss'
 import { TranslateJobsProvider } from './providers/translate-jobs'
 
 let isAppAttached = false
 let lastSelection: TextSelection | undefined
 let highlighter: any
+let styleCache: ReturnType<typeof createCache>
 
 const main = async () => {
   const container = document.createElement('div')
@@ -39,13 +42,9 @@ const main = async () => {
 
   window.addEventListener('load', () => {
     try {
-      // @ts-ignore
       rangy.init()
-      // @ts-ignore
       highlighter = rangy.createHighlighter()
-      // @ts-ignore
       highlighter.addClassApplier(
-        // @ts-ignore
         rangy.createClassApplier('ate-highlight', {
           ignoreWhiteSpace: true,
           tagNames: ['span', 'a'],
@@ -55,20 +54,24 @@ const main = async () => {
       document.querySelector<HTMLBodyElement>('body')?.append(iconContainer)
       document.querySelector<HTMLBodyElement>('body')?.append(container)
 
-      attachListeners()
+      cc(chrome.storage.sync, 'get').then((config: Partial<Config>) => {
+        const hoverButton =
+          config.hoverButton === undefined || config.hoverButton
 
-      // TODO: remove before deploying
-      // initApp()
+        if (hoverButton) {
+          document.querySelector<HTMLBodyElement>('body')?.append(iconContainer)
+        }
+
+        attachListeners({
+          hoverButton,
+        })
+      })
     } catch (err) {
       logger.error({
         err,
       })
     }
   })
-
-  if (!('scrollBehavior' in document.documentElement.style)) {
-    smoothScrollPolyfill.polyfill()
-  }
 }
 
 const onMouseUp = (e: MouseEvent) => {
@@ -104,6 +107,7 @@ const onMouseUp = (e: MouseEvent) => {
       highlightSelection(lastSelection.selection)
 
       addTranslateJob({
+        type: 'translate',
         anchorId,
         id,
         text: lastSelection.text,
@@ -162,12 +166,41 @@ const addTranslateJob = (job: TranslateJob) => {
   translationStack.push(job)
 }
 
-const attachListeners = () => {
-  document.addEventListener('mouseup', onMouseUp, false)
+const attachListeners = (config: { hoverButton: boolean }) => {
+  if (config.hoverButton) {
+    document.addEventListener('mouseup', onMouseUp, false)
+  }
 
   server.on('connect', (client) => {
     client.on('open_extension', () => {
       initApp()
+    })
+
+    client.on('toggle_ocr', () => {
+      if (isAppAttached) {
+        initApp()
+        translationStack.push({
+          type: 'directive',
+          directive: 'toggle_ocr',
+        })
+      } else {
+        initApp()
+        setTimeout(() => {
+          translationStack.push({
+            type: 'directive',
+            directive: 'toggle_ocr',
+          })
+        }, 50)
+      }
+    })
+
+    client.on('translate_text', (payload: { text: string }) => {
+      initApp()
+      translationStack.push({
+        type: 'translate',
+        id: uuid(),
+        text: payload.text,
+      })
     })
   })
 }
@@ -183,79 +216,57 @@ const highlightSelection = (selection: RangySelection) => {
 }
 
 const getTextSelection = (selection: RangySelection): TextSelection => {
-  const text = selection.toString().trim()
-  // const html = selection.toHtml().trim()
+  let text: string
+
+  if ('toString' in selection.nativeSelection) {
+    text = selection.nativeSelection.toString().trim()
+  } else {
+    text = selection.toString().trim()
+  }
+
+  const parentElement = selection.anchorNode?.parentElement
+
+  if (
+    parentElement &&
+    (parentElement.closest('pre') || parentElement.closest('.highlight'))
+  ) {
+    text = text.replaceAll('\n', ' ')
+  }
+
+  logger.debug(text.split('\n'))
 
   return {
     selection,
-    sourceLang: getSourceLang(),
+    sourceLang: getDocumentLang(),
     text,
   }
 }
 
-const getSourceLang = (): SupportLanguages | undefined => {
-  const html = document.querySelector('html')
+const initApp = (): void => {
+  const containerEl = document.querySelector('#ate-container')
 
-  if (!html) return
-
-  if (!html.hasAttribute('lang')) {
+  if (!containerEl) {
     return
   }
 
-  const lang = (html.getAttribute('lang') as string).toUpperCase()
-
-  if (lang.startsWith('ZH')) {
-    return 'ZH'
-  }
-  if (lang.startsWith('EN')) {
-    return 'EN'
-  }
-  if (lang.startsWith('EN')) {
-    return 'EN'
-  }
-  if (lang.startsWith('JA')) {
-    return 'JA'
-  }
-  if (lang.startsWith('DE')) {
-    return 'DE'
-  }
-  if (lang.startsWith('FR')) {
-    return 'FR'
-  }
-  if (lang.startsWith('ES')) {
-    return 'ES'
-  }
-  if (lang.startsWith('PT')) {
-    return 'PT'
-  }
-  if (lang.startsWith('PT')) {
-    return 'PT'
-  }
-  if (lang.startsWith('IT')) {
-    return 'IT'
-  }
-  if (lang.startsWith('NL')) {
-    return 'NL'
-  }
-  if (lang.startsWith('PL')) {
-    return 'PL'
-  }
-  if (lang.startsWith('RU')) {
-    return 'RU'
+  if (!styleCache) {
+    styleCache = createCache({
+      key: 'ate',
+    })
   }
 
-  return undefined
-}
-
-const initApp = () => {
   if (isAppAttached) {
     window.__ate_setClose && window.__ate_setClose(false)
   } else {
     render(
-      <TranslateJobsProvider>
-        <App />
-      </TranslateJobsProvider>,
-      document.querySelector('#ate-container'),
+      <CacheProvider value={styleCache}>
+        <TranslateJobsProvider>
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
+        </TranslateJobsProvider>
+      </CacheProvider>,
+      containerEl,
     )
     isAppAttached = true
   }

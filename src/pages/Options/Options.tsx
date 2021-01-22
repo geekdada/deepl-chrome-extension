@@ -4,19 +4,28 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import tw, { css } from 'twin.macro'
+import tw, { css, styled } from 'twin.macro'
 import { Global } from '@emotion/react'
 import cc from 'chrome-call'
+import { useSnackbar } from 'notistack'
 
 import Client from '../../common/api'
-import { APIRegions, Config } from '../../common/types'
-
+import { supportedLanguages } from '../../common/constant'
+import { APIRegions, Config, SupportLanguageKeys } from '../../common/types'
 import OptionSection from './components/OptionSection'
+
+const InputGroup = styled('div')`
+  ${tw`flex space-x-3 items-center`}
+`
 
 const Options: React.FC = () => {
   const [targetLang, setTargetLang] = useState('ZH')
   const [token, setToken] = useState('')
   const [region, setRegion] = useState<APIRegions>('default')
+  const [ocrSecretId, setOCRSecretId] = useState('')
+  const [ocrSecretKey, setOCRSecretKey] = useState('')
+  const [hoverButton, setHoverButton] = useState(true)
+  const { enqueueSnackbar } = useSnackbar()
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault()
@@ -25,9 +34,12 @@ const Options: React.FC = () => {
         targetLang,
         token,
         region,
+        ocrSecretId,
+        ocrSecretKey,
+        hoverButton,
       })
 
-      window.alert('保存成功')
+      enqueueSnackbar('保存成功', { variant: 'success' })
     })()
   }
 
@@ -35,7 +47,7 @@ const Options: React.FC = () => {
     e.preventDefault()
 
     if (!token) {
-      window.alert('请填入 API Token')
+      enqueueSnackbar('请填入 API Token', { variant: 'warning' })
       return
     }
 
@@ -44,10 +56,10 @@ const Options: React.FC = () => {
     client
       .translate('This is a test message.', 'ZH')
       .then(() => {
-        window.alert('测试成功')
+        enqueueSnackbar('测试成功', { variant: 'success' })
       })
       .catch((err) => {
-        window.alert('测试失败：' + err.message)
+        enqueueSnackbar('测试失败：' + err.message, { variant: 'error' })
       })
   }
 
@@ -56,6 +68,10 @@ const Options: React.FC = () => {
       if (config.targetLang !== undefined) setTargetLang(config.targetLang)
       if (config.token !== undefined) setToken(config.token)
       if (config.region !== undefined) setRegion(config.region)
+      if (config.ocrSecretId !== undefined) setOCRSecretId(config.ocrSecretId)
+      if (config.ocrSecretKey !== undefined)
+        setOCRSecretKey(config.ocrSecretKey)
+      if (config.hoverButton !== undefined) setHoverButton(config.hoverButton)
     })
   }, [])
 
@@ -88,7 +104,9 @@ const Options: React.FC = () => {
           设定
         </div>
 
-        <form onSubmit={onSubmit} tw="flex flex-col justify-between flex-1">
+        <form
+          onSubmit={onSubmit}
+          tw="flex flex-col justify-between flex-1 overflow-hidden">
           <div tw="space-y-6 p-5 overflow-auto">
             <OptionSection title={'目标语言'}>
               <select
@@ -96,19 +114,11 @@ const Options: React.FC = () => {
                 name="target-lang"
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value)}>
-                <option value="ZH">中文</option>
-                <option value="EN-US">English (American)</option>
-                <option value="EN-GB">English (British)</option>
-                <option value="JA">日本語</option>
-                <option value="DE">German</option>
-                <option value="FR">French</option>
-                <option value="ES">Spanish</option>
-                <option value="PT-PT">Portuguese</option>
-                <option value="PT-BR">Portuguese(Brazilian)</option>
-                <option value="IT">Italian</option>
-                <option value="NL">Dutch</option>
-                <option value="PL">Polish</option>
-                <option value="RU">Russian</option>
+                {Object.keys(supportedLanguages).map((lang, index) => (
+                  <option value={lang} key={index}>
+                    {supportedLanguages[lang as SupportLanguageKeys]}
+                  </option>
+                ))}
               </select>
             </OptionSection>
 
@@ -136,8 +146,48 @@ const Options: React.FC = () => {
               </select>
             </OptionSection>
 
+            <OptionSection title={'腾讯云 OCR'}>
+              <div tw="space-y-3">
+                <div>
+                  <input
+                    tw="rounded-md w-full"
+                    type="text"
+                    placeholder="Secret Id"
+                    value={ocrSecretId}
+                    onChange={(e) => setOCRSecretId(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <input
+                    tw="rounded-md w-full"
+                    type="password"
+                    placeholder="Secret Key"
+                    value={ocrSecretKey}
+                    onChange={(e) => setOCRSecretKey(e.target.value)}
+                  />
+                </div>
+
+                <div tw="text-sm text-gray-600">
+                  可不填，填入后可使用 OCR 识别文字翻译。
+                </div>
+              </div>
+            </OptionSection>
+
+            <OptionSection title={'其它设置'}>
+              <InputGroup>
+                <input
+                  type="checkbox"
+                  id="hover-button"
+                  checked={hoverButton}
+                  onChange={(e) => setHoverButton(e.target.checked)}
+                />
+                <label htmlFor="hover-button">开启网页悬浮按钮</label>
+              </InputGroup>
+            </OptionSection>
+
             <OptionSection title={'🔗 相关链接'}>
-              <ul>
+              <ul tw="space-y-2">
                 <li>
                   <a
                     tw="text-blue-600 cursor-pointer"
@@ -147,11 +197,20 @@ const Options: React.FC = () => {
                     → 后台
                   </a>
                 </li>
+                <li>
+                  <a
+                    tw="text-blue-600 cursor-pointer"
+                    href="https://ripperhe.gitee.io/bob/#/service/ocr/tencent"
+                    target="_blank"
+                    rel="noreferrer">
+                    → 如何配置腾讯云 OCR
+                  </a>
+                </li>
               </ul>
             </OptionSection>
           </div>
 
-          <div tw="p-5 space-x-4 justify-self-end">
+          <div tw="p-5 space-x-4 justify-self-end border-t border-solid border-gray-100">
             <a
               href="https://www.notion.so/geekdada/41aad58f38f0492197f9845e26b248d0"
               target="_blank"

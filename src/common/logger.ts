@@ -16,7 +16,7 @@ const logger = pino({
       }
 
       const label = pino.levels.labels[level]
-      const logs: any[] = [`[ATE] [${label.toUpperCase()}] ${msg}`]
+      const logs: any[] = [`[ATE] [${label.toUpperCase()}] ${msg || ''}`]
       const method = getMethod(level)
       const extra = omit(o, ['msg', 'level', 'time', 'err'])
 

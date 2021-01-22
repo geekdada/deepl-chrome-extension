@@ -1,3 +1,63 @@
+# [0.2.0-5](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-4...v0.2.0-5) (2021-01-22)
+
+
+### Bug Fixes
+
+* use chinese ([b3b6188](https://github.com/geekdada/a-translator-chrome-extension/commit/b3b61880af68cae845f4c83f12f23c503b49f3b2))
+
+
+### Features
+
+* add config for hover button ([477de29](https://github.com/geekdada/a-translator-chrome-extension/commit/477de29b86033267db3acb95f042bdbbc1425786))
+* add context menus ([ccf87a5](https://github.com/geekdada/a-translator-chrome-extension/commit/ccf87a512664d45c236e0017ccd613ef39d8352e))
+* keyboard shortcuts ([c26cf83](https://github.com/geekdada/a-translator-chrome-extension/commit/c26cf83fc92225367cf676e736e773d66f7ed075))
+
+
+
+# [0.2.0-4](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-3...v0.2.0-4) (2021-01-21)
+
+
+### Features
+
+* ocr text for translating ([72b58ed](https://github.com/geekdada/a-translator-chrome-extension/commit/72b58ede93a68032d2b4979e46ae32f35803a9ea))
+* turn off ocr tool when the selection is too small ([0e13070](https://github.com/geekdada/a-translator-chrome-extension/commit/0e130708c7c87d1e3e6929509e65abbccff3db8b))
+
+
+
+# [0.2.0-3](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-2...v0.2.0-3) (2021-01-20)
+
+
+### Features
+
+* change target language directly in webpage ([fdb574b](https://github.com/geekdada/a-translator-chrome-extension/commit/fdb574b8210ce6914f64f2a8cfecdde13cdf7ad6))
+* retry button ([2b287d3](https://github.com/geekdada/a-translator-chrome-extension/commit/2b287d3fec67c01f25a8a8d7b57c3c0e02962b29))
+
+
+
+# [0.2.0-2](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-1...v0.2.0-2) (2021-01-18)
+
+
+### Bug Fixes
+
+* conflict with emotion 10 application ([699948e](https://github.com/geekdada/a-translator-chrome-extension/commit/699948e1c1f93f43b4e939b4b4652213d1973423))
+* style typo ([4e46590](https://github.com/geekdada/a-translator-chrome-extension/commit/4e4659034f871b25ed7a64d24147eec04c542b6e))
+
+
+
+# [0.2.0-1](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-0...v0.2.0-1) (2021-01-18)
+
+
+
+# [0.2.0-0](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.6...v0.2.0-0) (2021-01-17)
+
+
+### Features
+
+* add polyfill for old browsers ([0e38a77](https://github.com/geekdada/a-translator-chrome-extension/commit/0e38a77ea2fe224ae5086d2930ce9d17cc89530a))
+* optimize string selection ([7ea8ac7](https://github.com/geekdada/a-translator-chrome-extension/commit/7ea8ac71fb88146e46b6608bc5eeacae659762ac))
+
+
+
 ## [0.1.6](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.1.5...v0.1.6) (2021-01-10)
 
 
