@@ -1,3 +1,19 @@
+# [0.2.0-5](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-4...v0.2.0-5) (2021-01-22)
+
+
+### Bug Fixes
+
+* use chinese ([b3b6188](https://github.com/geekdada/a-translator-chrome-extension/commit/b3b61880af68cae845f4c83f12f23c503b49f3b2))
+
+
+### Features
+
+* add config for hover button ([477de29](https://github.com/geekdada/a-translator-chrome-extension/commit/477de29b86033267db3acb95f042bdbbc1425786))
+* add context menus ([ccf87a5](https://github.com/geekdada/a-translator-chrome-extension/commit/ccf87a512664d45c236e0017ccd613ef39d8352e))
+* keyboard shortcuts ([c26cf83](https://github.com/geekdada/a-translator-chrome-extension/commit/c26cf83fc92225367cf676e736e773d66f7ed075))
+
+
+
 # [0.2.0-4](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-3...v0.2.0-4) (2021-01-21)
 
 
