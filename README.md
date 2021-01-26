@@ -22,6 +22,8 @@
 
 ![](./assets/screenshot.png)
 
+更详尽的使用文档请前往 [这里](https://www.notion.so/geekdada/Chrome-95ba478ceca745f8b98b4a1d06c0f8dd)
+
 ## License
 
 [MIT](./LICENSE)
