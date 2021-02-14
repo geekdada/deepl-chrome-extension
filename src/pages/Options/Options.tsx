@@ -132,20 +132,6 @@ const Options: React.FC = () => {
               />
             </OptionSection>
 
-            <OptionSection title={'API 地区'}>
-              <select
-                tw="px-4 py-3 rounded-md"
-                name="region"
-                value={region}
-                onChange={(e) => setRegion(e.target.value as APIRegions)}>
-                <option value="default">默认</option>
-                <option value="global">全球（非亚洲地区）</option>
-                {process.env.NODE_ENV !== 'production' ? (
-                  <option value="dev">DEV</option>
-                ) : undefined}
-              </select>
-            </OptionSection>
-
             <OptionSection title={'腾讯云 OCR'}>
               <div tw="space-y-3">
                 <div>
@@ -188,15 +174,6 @@ const Options: React.FC = () => {
 
             <OptionSection title={'🔗 相关链接'}>
               <ul tw="space-y-2">
-                <li>
-                  <a
-                    tw="text-blue-600 cursor-pointer"
-                    href="https://a-translator.royli.dev/dashboard"
-                    target="_blank"
-                    rel="noreferrer">
-                    → 后台
-                  </a>
-                </li>
                 <li>
                   <a
                     tw="text-blue-600 cursor-pointer"

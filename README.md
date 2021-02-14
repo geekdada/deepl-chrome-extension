@@ -1,5 +1,7 @@
 # a-translator-chrome-extension
 
+一个支持 DeepL 翻译的 Chrome 插件（需自己购买 DeepL API 计划）。
+
 ## 安装
 
 ### Chrome Web Store
@@ -14,7 +16,7 @@
 
 ## 配置
 
-请在插件配置页面填入 A Translator 的 [API Token](https://a-translator.royli.dev/dashboard/profile)。
+请在插件配置页面填入 DeepL 的 API Token。
 
 ## 使用
 

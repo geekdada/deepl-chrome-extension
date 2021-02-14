@@ -11,7 +11,7 @@ export interface Config {
 
 export type SupportLanguageKeys = keyof typeof supportedLanguages
 
-export type APIRegions = 'default' | 'global' | 'dev'
+export type APIRegions = 'default'
 
 export type TranslateResult = {
   translations: Array<{

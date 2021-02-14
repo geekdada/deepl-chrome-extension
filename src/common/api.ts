@@ -49,12 +49,8 @@ class Client {
 
   private getAPI(): string {
     switch (this.region) {
-      case 'global':
-        return 'https://a-translator-api-cf.nerdynerd.org'
-      case 'dev':
-        return 'http://localhost:1337'
       default:
-        return 'https://a-translator-api.nerdynerd.org'
+        return 'https://api.deepl.com'
     }
   }
 }
