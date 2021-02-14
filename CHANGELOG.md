@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0...v0.3.0) (2021-02-14)
+
+
+### Features
+
+* remove support for a translator ([3eee95a](https://github.com/geekdada/a-translator-chrome-extension/commit/3eee95aafb6543052a492734b806dba1907cb701))
+
+
+
 # [0.2.0](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0-5...v0.2.0) (2021-01-22)
 
 
