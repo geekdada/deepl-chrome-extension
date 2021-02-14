@@ -1,7 +1,7 @@
 {
   "name": "a-translator-chrome-extension",
   "version": "0.3.0",
-  "description": "A Chrome extension for A Translator",
+  "description": "DeepL translate for Chrome",
   "license": "MIT",
   "repository": {
     "type": "git",
