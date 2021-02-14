@@ -1,3 +1,7 @@
+## [0.3.1](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.3.0...v0.3.1) (2021-02-14)
+
+
+
 # [0.3.0](https://github.com/geekdada/a-translator-chrome-extension/compare/v0.2.0...v0.3.0) (2021-02-14)
 
 
