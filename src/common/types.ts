@@ -1,4 +1,4 @@
-import { supportedLanguages } from './constant'
+import { supportedLanguages, supportedRegions } from './constant'
 
 export interface Config {
   token: string
@@ -10,8 +10,9 @@ export interface Config {
 }
 
 export type SupportLanguageKeys = keyof typeof supportedLanguages
+export type SupportRegionKeys = keyof typeof supportedRegions
 
-export type APIRegions = 'default'
+export type APIRegions = 'default' | 'free'
 
 export type TranslateResult = {
   translations: Array<{

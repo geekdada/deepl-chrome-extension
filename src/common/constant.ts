@@ -13,3 +13,8 @@ export const supportedLanguages = {
   PL: 'Polish',
   RU: 'Russian',
 }
+
+export const supportedRegions = {
+  default: 'DeepL Pro',
+  free: '免费',
+}

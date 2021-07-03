@@ -10,8 +10,13 @@ import cc from 'chrome-call'
 import { useSnackbar } from 'notistack'
 
 import Client from '../../common/api'
-import { supportedLanguages } from '../../common/constant'
-import { APIRegions, Config, SupportLanguageKeys } from '../../common/types'
+import { supportedLanguages, supportedRegions } from '../../common/constant'
+import {
+  APIRegions,
+  Config,
+  SupportLanguageKeys,
+  SupportRegionKeys,
+} from '../../common/types'
 import OptionSection from './components/OptionSection'
 
 const InputGroup = styled('div')`
@@ -110,7 +115,10 @@ const Options: React.FC = () => {
           <div tw="space-y-6 p-5 overflow-auto">
             <OptionSection title={'目标语言'}>
               <select
-                tw="px-4 py-3 rounded-md"
+                tw="px-4 pl-3 pr-8 rounded-md"
+                css={css`
+                  background-position: right 0.3rem center;
+                `}
                 name="target-lang"
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value)}>
@@ -122,7 +130,26 @@ const Options: React.FC = () => {
               </select>
             </OptionSection>
 
-            <OptionSection title={'API Token'}>
+            <OptionSection title={'API 类型'}>
+              <select
+                tw="px-4 pl-3 pr-8 rounded-md"
+                css={css`
+                  background-position: right 0.3rem center;
+                `}
+                name="region"
+                value={region}
+                onChange={(e) =>
+                  setRegion(e.target.value as SupportRegionKeys)
+                }>
+                {Object.keys(supportedRegions).map((region, index) => (
+                  <option value={region} key={index}>
+                    {supportedRegions[region as SupportRegionKeys]}
+                  </option>
+                ))}
+              </select>
+            </OptionSection>
+
+            <OptionSection title={'API 秘钥'}>
               <input
                 tw="rounded-md w-full"
                 type="text"
