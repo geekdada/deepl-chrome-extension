@@ -1,4 +1,5 @@
 import { supportedLanguages, supportedRegions } from './constant'
+import { OcrRegionKeys } from './ocr-client'
 
 export interface Config {
   token: string
@@ -6,6 +7,7 @@ export interface Config {
   region: APIRegions
   ocrSecretId?: string
   ocrSecretKey?: string
+  ocrRegion?: OcrRegionKeys
   hoverButton?: boolean
 }
 

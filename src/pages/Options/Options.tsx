@@ -11,6 +11,7 @@ import { useSnackbar } from 'notistack'
 
 import Client from '../../common/api'
 import { supportedLanguages, supportedRegions } from '../../common/constant'
+import { OcrRegionKeys, OcrRegions } from '../../common/ocr-client'
 import {
   APIRegions,
   Config,
@@ -29,6 +30,7 @@ const Options: React.FC = () => {
   const [region, setRegion] = useState<APIRegions>('default')
   const [ocrSecretId, setOCRSecretId] = useState('')
   const [ocrSecretKey, setOCRSecretKey] = useState('')
+  const [ocrRegion, setOCRRegion] = useState<OcrRegionKeys>('ap-shanghai')
   const [hoverButton, setHoverButton] = useState(true)
   const { enqueueSnackbar } = useSnackbar()
 
@@ -41,6 +43,7 @@ const Options: React.FC = () => {
         region,
         ocrSecretId,
         ocrSecretKey,
+        ocrRegion,
         hoverButton,
       })
 
@@ -76,6 +79,7 @@ const Options: React.FC = () => {
       if (config.ocrSecretId !== undefined) setOCRSecretId(config.ocrSecretId)
       if (config.ocrSecretKey !== undefined)
         setOCRSecretKey(config.ocrSecretKey)
+      if (config.ocrRegion !== undefined) setOCRRegion(config.ocrRegion)
       if (config.hoverButton !== undefined) setHoverButton(config.hoverButton)
     })
   }, [])
@@ -113,7 +117,7 @@ const Options: React.FC = () => {
           onSubmit={onSubmit}
           tw="flex flex-col justify-between flex-1 overflow-hidden">
           <div tw="space-y-6 p-5 overflow-auto">
-            <OptionSection title={'目标语言'}>
+            <OptionSection title={'默认目标语言'}>
               <select
                 tw="px-4 pl-3 pr-8 rounded-md"
                 css={css`
@@ -179,6 +183,25 @@ const Options: React.FC = () => {
                     value={ocrSecretKey}
                     onChange={(e) => setOCRSecretKey(e.target.value)}
                   />
+                </div>
+
+                <div>
+                  <select
+                    tw="px-4 pl-3 pr-8 rounded-md"
+                    css={css`
+                      background-position: right 0.3rem center;
+                    `}
+                    name="ocr-region"
+                    value={ocrRegion}
+                    onChange={(e) =>
+                      setOCRRegion(e.target.value as OcrRegionKeys)
+                    }>
+                    {Object.keys(OcrRegions).map((region, index) => (
+                      <option value={region} key={index}>
+                        {OcrRegions[region as OcrRegionKeys]}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div tw="text-sm text-gray-600">
