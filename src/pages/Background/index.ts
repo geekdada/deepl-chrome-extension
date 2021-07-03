@@ -68,7 +68,7 @@ chrome.commands.onCommand.addListener(function (command) {
 
 chrome.contextMenus.create({
   id: 'ate',
-  title: 'A Translator',
+  title: 'DeepL Translate',
   contexts: ['page'],
 })
 

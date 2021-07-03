@@ -1,18 +1,18 @@
 {
-  "name": "a-translator-chrome-extension",
+  "name": "deepl-chrome-extension",
   "version": "0.3.1",
   "description": "DeepL translate for Chrome",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/geekdada/a-translator-chrome-extension"
+    "url": "https://github.com/geekdada/deepl-chrome-extension"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development node scripts/webserver.js",
     "build": "cross-env NODE_ENV=production webpack",
     "release": "run-s build && sh scripts/build.sh",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,html}'",
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "pub": "np --no-publish --no-release-draft",
     "version": "npm run changelog && git add ."
@@ -34,7 +34,7 @@
     "@hot-loader/react-dom": "^17.0.1",
     "@material-ui/core": "^4.11.2",
     "@tailwindcss/forms": "^0.2.1",
-    "@types/chrome": "0.0.128",
+    "@types/chrome": "0.0.145",
     "@types/crypto-js": "^4.0.1",
     "@types/fs-extra": "^9.0.6",
     "@types/lodash-es": "^4.17.4",
@@ -65,7 +65,8 @@
     "css-loader": "^5.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
     "file-loader": "^6.2.0",
@@ -94,7 +95,7 @@
     "react-dom": "^17.0.1",
     "react-draggable": "^4.4.3",
     "react-hot-loader": "^4.13.0",
-    "react-resizable": "^1.11.0",
+    "react-resizable": "^3.0.4",
     "react-scroll-to-bottom": "^4.1.0",
     "sass-loader": "^10.1.0",
     "scrollparent": "^2.0.1",

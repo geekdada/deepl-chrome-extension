@@ -17,7 +17,7 @@ class Client {
         if (error.response) {
           const { data, status } = error.response
 
-          if (data.message) {
+          if (data?.message) {
             error.message = `${data.message} (${status})`
           }
         }
@@ -49,6 +49,8 @@ class Client {
 
   private getAPI(): string {
     switch (this.region) {
+      case 'free':
+        return 'https://api-free.deepl.com'
       default:
         return 'https://api.deepl.com'
     }

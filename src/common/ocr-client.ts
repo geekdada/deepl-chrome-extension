@@ -2,6 +2,17 @@ import defaultsDeep from 'lodash-es/defaultsDeep'
 import { SHA256, HmacSHA256, enc } from 'crypto-js'
 import axios from 'axios'
 
+export const OcrRegions = {
+  'ap-shanghai': '华东地区(上海)',
+  'ap-beijing': '华北地区(北京)',
+  'ap-guangzhou': '华南地区(广州)',
+  'ap-hongkong': '港澳台地区(中国香港)',
+  'ap-seoul': '亚太东北(首尔)',
+  'ap-singapore': '亚太东南(新加坡)',
+  'na-toronto': '北美地区(多伦多)',
+}
+export type OcrRegionKeys = keyof typeof OcrRegions
+
 export class TcRequestError extends Error {
   code?: string
 
@@ -16,7 +27,7 @@ export class OcrClient {
   private config: {
     secretId: string
     secretKey: string
-    region: string
+    region: OcrRegionKeys
   }
   private requestConfig = {
     host: 'ocr.tencentcloudapi.com',
@@ -31,7 +42,11 @@ export class OcrClient {
     signedHeaders: 'content-type;host',
   }
 
-  constructor(config: { secretId: string; secretKey: string; host?: string }) {
+  constructor(config: {
+    secretId: string
+    secretKey: string
+    region?: OcrRegionKeys
+  }) {
     this.config = defaultsDeep({}, config, {
       region: 'ap-shanghai',
     })
@@ -94,9 +109,10 @@ export class OcrClient {
       })
   }
 
-  private signPayload(
-    payload: Record<string, any>,
-  ): { authorization: string; timestamp: number } {
+  private signPayload(payload: Record<string, any>): {
+    authorization: string
+    timestamp: number
+  } {
     const hashedRequestPayload = SHA256(JSON.stringify(payload))
     const canonicalRequest = [
       this.requestConfig.httpRequestMethod,

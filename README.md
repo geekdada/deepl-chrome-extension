@@ -1,6 +1,6 @@
-# a-translator-chrome-extension
+# DeepL Translate for Chrome
 
-一个支持 DeepL 翻译的 Chrome 插件（需自己购买 DeepL API 计划）。
+Chrome DeepL 翻译插件 （需自己购买 DeepL API 计划）。
 
 ## 安装
 

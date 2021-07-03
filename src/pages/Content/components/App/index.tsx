@@ -189,7 +189,7 @@ const App: React.FC = () => {
               <div
                 className="ate_App__header"
                 tw="bg-purple-800 px-5 py-3 text-white font-bold text-lg cursor-move flex justify-between items-center">
-                <span>A Translator</span>
+                <span>DeepL Translate</span>
                 <span tw="flex space-x-3">
                   {enableOCR ? (
                     <IconButton

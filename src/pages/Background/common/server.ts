@@ -4,7 +4,7 @@ import { createServer } from 'connect.io'
 import Client from '../../../common/api'
 import logger from '../../../common/logger'
 import { Config } from '../../../common/types'
-import { OcrClient } from './ocr-client'
+import { OcrClient } from '../../../common/ocr-client'
 import { Handler } from './types'
 import { cropImage } from './utils'
 
@@ -107,6 +107,7 @@ const onOCR: Handler<{
     const client = new OcrClient({
       secretId: config.ocrSecretId,
       secretKey: config.ocrSecretKey,
+      region: config.ocrRegion,
     })
     const data = await client.request({ dataUrl: payload.dataUrl })
 
