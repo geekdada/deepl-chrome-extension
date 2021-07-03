@@ -4,14 +4,14 @@ module.exports = {
     node: true,
   },
   extends: [
-    'prettier',
-    'prettier/@typescript-eslint',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: './tsconfig.eslint.json',
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
@@ -23,5 +23,10 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-var-requires': 0,
     'react/prop-types': 0,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 }

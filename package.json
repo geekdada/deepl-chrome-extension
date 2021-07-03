@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "release": "run-s build && sh scripts/build.sh",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,html}'",
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "pub": "np --no-publish --no-release-draft",
     "version": "npm run changelog && git add ."
@@ -65,7 +65,8 @@
     "css-loader": "^5.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
     "file-loader": "^6.2.0",

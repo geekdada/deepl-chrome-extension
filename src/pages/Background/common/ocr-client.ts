@@ -94,9 +94,10 @@ export class OcrClient {
       })
   }
 
-  private signPayload(
-    payload: Record<string, any>,
-  ): { authorization: string; timestamp: number } {
+  private signPayload(payload: Record<string, any>): {
+    authorization: string
+    timestamp: number
+  } {
     const hashedRequestPayload = SHA256(JSON.stringify(payload))
     const canonicalRequest = [
       this.requestConfig.httpRequestMethod,
