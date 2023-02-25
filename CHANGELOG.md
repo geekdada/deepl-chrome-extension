@@ -1,3 +1,12 @@
+## [0.4.2](https://github.com/geekdada/deepl-chrome-extension/compare/v0.4.1...v0.4.2) (2023-02-25)
+
+
+### Bug Fixes
+
+* pipeline ([6e08697](https://github.com/geekdada/deepl-chrome-extension/commit/6e086978705479ee7e741e11378f0e0f5241bbf5))
+
+
+
 ## [0.4.1](https://github.com/geekdada/deepl-chrome-extension/compare/v0.4.0...v0.4.1) (2023-02-25)
 
 
