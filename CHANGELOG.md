@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/geekdada/deepl-chrome-extension/compare/v0.4.0...v0.4.1) (2023-02-25)
+
+
+### Bug Fixes
+
+* DeepL API authorization ([38486d0](https://github.com/geekdada/deepl-chrome-extension/commit/38486d0acec2e75a77c23c794999a97a6a753251))
+
+
+
 # [0.4.0](https://github.com/geekdada/deepl-chrome-extension/compare/v0.3.1...v0.4.0) (2021-07-03)
 
 
