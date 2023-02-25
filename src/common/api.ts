@@ -31,7 +31,6 @@ class Client {
       .post(
         '/v2/translate',
         qs.stringify({
-          auth_key: this.apiToken,
           target_lang: targetLang,
           split_sentences: '1',
           preserve_formatting: '0',
@@ -39,7 +38,8 @@ class Client {
         }),
         {
           headers: {
-            'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+            Authorization: `DeepL-Auth-Key ${this.apiToken}`,
           },
           responseType: 'json',
         },
